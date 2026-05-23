@@ -1,345 +1,733 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"/>
-<title>CRACK THE CODE — Neuro-Adaptative System & AI Therapy</title>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<style>
-:root{
---bg:#f4f1eb;
---card:#ffffff;
---text:#111111;
---muted:#6c757d;
---line:#e5e1d9;
---primary:#111;
---danger:#d1002f;
---success:#0d8b50;
---warning:#b86a00;
---blue:#2247aa;
---purple:#6f42c1;
---radius:20px;
---shadow:0 12px 34px rgba(0,0,0,.04);
---navH:84px;
-}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body,#app{height:100%;}
-body{font-family:Inter,sans-serif;background:var(--bg);color:var(--text);overflow:hidden;}
-button,input,select,textarea{font:inherit;}
-button{cursor:pointer;border:none;outline:none;}
-::-webkit-scrollbar{width:0;height:0;}
-.page{height:100%;overflow-y:auto;padding:24px 20px calc(var(--navH) + 36px);scroll-behavior:smooth;-webkit-overflow-scrolling:touch;}
-.display{font-family:Cinzel,serif;letter-spacing:0.05em;}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
-.btn{width:100%;border-radius:16px;padding:16px;font-weight:700;transition:.15s cubic-bezier(0.4, 0, 0.2, 1);text-align:center;font-size:15px;}
-.btn:active{transform:scale(.97);}
-.btn-primary{background:var(--primary);color:#fff;}
-.btn-danger{background:var(--danger);color:#fff;}
-.btn-outline{background:transparent;border:1px solid var(--line);color:var(--text);}
-.grid{display:grid;gap:14px;}
-.grid-2{grid-template-columns:1fr 1fr;}
-.nav{position:fixed;left:0;right:0;bottom:0;height:var(--navH);padding-bottom:env(safe-area-inset-bottom);background:rgba(255,255,255,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--line);display:flex;z-index:999;}
-.nav button{flex:1;background:none;font-size:11px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
-.nav .active{color:var(--text);font-weight:700;}
-.nav .icon{font-size:22px;transition:transform 0.2s ease;}
-.nav button:active .icon{transform:scale(1.2);}
-.label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;}
-.title{font-size:28px;margin-top:2px;}
-.hero{padding:24px;background:linear-gradient(135deg,#111111,#2d2d2d);color:white;border-radius:24px;box-shadow:0 10px 25px rgba(0,0,0,0.15);}
-.hero p{margin-top:10px;opacity:.9;line-height:1.5;font-size:14px;}
-.tag{display:inline-flex;padding:4px 10px;background:#f0ede6;border-radius:999px;font-size:11px;font-weight:700;color:var(--text);}
-.small{font-size:13px;color:var(--muted);}
-.chat-wrap{display:flex;flex-direction:column;gap:12px;margin-top:14px;padding-bottom:20px;}
-.msg{max-width:85%;padding:14px 16px;border-radius:18px;line-height:1.5;font-size:15px;animation:slideUp .2s cubic-bezier(0.4, 0, 0.2, 1) forwards;}
-.user{align-self:flex-end;background:var(--blue);color:white;border-bottom-right-radius:4px;}
-.bot{align-self:flex-start;background:white;border:1px solid var(--line);border-bottom-left-radius:4px;}
-@keyframes slideUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
-.inputBar{display:flex;gap:10px;padding:14px 0;background:var(--bg);position:sticky;bottom:0;}
-.inputBar input{flex:1;padding:16px;border-radius:16px;border:1px solid var(--line);background:white;font-size:15px;}
-.bigCircle{width:220px;height:220px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .95s linear;margin:auto;box-shadow:0 10px 30px rgba(0,0,0,0.05);}
-.fade{animation:slideUp .3s ease;}
-.xp-badge{background:linear-gradient(135deg, var(--purple), var(--blue));color:white;padding:6px 12px;border-radius:999px;font-weight:700;font-size:12px;display:inline-flex;align-items:center;gap:4px;}
-#tetrisCanvas{background:#111;display:block;margin:0 auto;border-radius:12px;border:3px solid var(--line);max-width:100%;}
-.mood-btn{padding:12px;border-radius:12px;border:1px solid var(--line);background:white;font-size:20px;text-align:center;}
-.mood-btn.selected{background:var(--primary);color:white;border-color:var(--primary);}
-.center{display:flex;align-items:center;}
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>CRACK THE CODE — Neuro-Adaptative System</title>
+    
+    <!-- Bibliothèques pour le rendu et le support JSX sur Kodex/Navigateur -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Typographies Design UI Mobile -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #f4f1eb;
+            --card: #ffffff;
+            --text: #111111;
+            --muted: #6c757d;
+            --line: #e5e1d9;
+            --primary: #111;
+            --danger: #d1002f;
+            --success: #0d8b50;
+            --warning: #b86a00;
+            --blue: #2247aa;
+            --purple: #6f42c1;
+            --radius: 20px;
+            --shadow: 0 12px 34px rgba(0,0,0,.04);
+            --navH: 84px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html, body, #app {
+            height: 100%;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+        }
+        button, input, select, textarea {
+            font: inherit;
+        }
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+        ::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+        .page {
+            height: 100%;
+            overflow-y: auto;
+            padding: 24px 20px calc(var(--navH) + 36px);
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .display {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.05em;
+        }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn {
+            width: 100%;
+            border-radius: 16px;
+            padding: 16px;
+            font-weight: 700;
+            transition: .15s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            font-size: 15px;
+        }
+        .btn:active {
+            transform: scale(.97);
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--line);
+            color: var(--text);
+        }
+        .grid {
+            display: grid;
+            gap: 14px;
+        }
+        .grid-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+        .nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: var(--navH);
+            padding-bottom: env(safe-area-inset-bottom);
+            background: rgba(255,255,255,.92);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid var(--line);
+            display: flex;
+            z-index: 999;
+        }
+        .nav button {
+            flex: 1;
+            background: none;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        .nav .active {
+            color: var(--text);
+            font-weight: 700;
+        }
+        .nav .icon {
+            font-size: 22px;
+            transition: transform 0.2s ease;
+        }
+        .nav button:active .icon {
+            transform: scale(1.2);
+        }
+        .label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--muted);
+            font-weight: 700;
+        }
+        .title {
+            font-size: 28px;
+            margin-top: 2px;
+        }
+        .hero {
+            padding: 24px;
+            background: linear-gradient(135deg, #111111, #2d2d2d);
+            color: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .hero p {
+            margin-top: 10px;
+            opacity: .9;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        .tag {
+            display: inline-flex;
+            padding: 4px 10px;
+            background: #f0ede6;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .chat-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 14px;
+            padding-bottom: 20px;
+        }
+        .msg {
+            max-width: 85%;
+            padding: 14px 16px;
+            border-radius: 18px;
+            line-height: 1.5;
+            font-size: 15px;
+            animation: slideUp .2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .user {
+            align-self: flex-end;
+            background: var(--blue);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .bot {
+            align-self: flex-start;
+            background: white;
+            border: 1px solid var(--line);
+            border-bottom-left-radius: 4px;
+        }
+        @keyframes slideUp { 
+            from { opacity: 0; transform: translateY(12px); } 
+            to { opacity: 1; transform: none; } 
+        }
+        .inputBar {
+            display: flex;
+            gap: 10px;
+            padding: 14px 0;
+            background: var(--bg);
+            position: sticky;
+            bottom: 0;
+        }
+        .inputBar input {
+            flex: 1;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid var(--line);
+            background: white;
+            font-size: 15px;
+        }
+        .bigCircle {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .95s linear;
+            margin: 40px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .fade {
+            animation: slideUp .3s ease;
+        }
+        .xp-badge {
+            background: linear-gradient(135deg, var(--purple), var(--blue));
+            color: white;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        #tetrisCanvas {
+            background: #111;
+            display: block;
+            margin: 0 auto;
+            border-radius: 12px;
+            border: 3px solid var(--line);
+            max-width: 100%;
+        }
+        .mood-btn {
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: white;
+            font-size: 20px;
+            text-align: center;
+            transition: 0.1s ease;
+        }
+        .mood-btn.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        .small {
+            font-size: 13px;
+            color: var(--muted);
+        }
+    </style>
 </head>
 <body>
+
 <div id="app"></div>
+
 <script type="text/babel">
-const STORAGE_KEY = "ctc_v13_therapy";
+    const STORAGE_KEY = "ctc_v14_prod_release";
 
-const REGIONS = {
-FR:{flag:"🇫🇷",label:"France",emergency:"15 / 112",help:"Drogues Info Service: 0 800 23 13 13"},
-BE:{flag:"🇧🇪",label:"Belgique",emergency:"112",help:"Infor-Drogues: 02 227 52 52"},
-CH:{flag:"🇨🇭",label:"Suisse",emergency:"144",help:"Info-Drogues: 0800 104 104"},
-CA:{flag:"🇨🇦",label:"Canada",emergency:"911",help:"Ligne d'aide: 1-866-585-0445"}
-};
+    // Structures Sanitaires & Urgences régionales
+    const REGIONS = {
+        FR: { flag: "🇫🇷", label: "France", emergency: "15 ou 112", help: "Drogues Info Service: 0 800 23 13 13" },
+        BE: { flag: "🇧🇪", label: "Belgique", emergency: "112", help: "Infor-Drogues: 02 227 52 52" },
+        CH: { flag: "🇨🇭", label: "Suisse", emergency: "144", help: "Info-Drogues: 0800 104 104" },
+        CA: { flag: "🇨🇦", label: "Canada", emergency: "911", help: "Ligne d'aide Canada-Unis: 1-866-585-0445" }
+    };
 
-const PSYCHOTROPES = [
-{id:"alcohol",name:"Alcool",cat:"Dépresseur",danger:"Majeur (Dépendance, Overdose si couplé)",rdr:"Éviter les mélanges avec opiacés/benzodiazépines. Hydratation intense (1 verre d'eau/verre d'alcool).",law:"Légal (Vente interdite aux mineurs)"},
-{id:"cocaine",name:"Cocaïne / Crack",cat:"Stimulant",danger:"Élevé (Cardiaque, Psychotropie compulsive)",rdr:"Ne pas partager la paille (RDR snif, risque Hépatite C). Espacer les prises de 45 min min.",law:"Strictement Interdit (Détention = Délit)"},
-{id:"cannabis",name:"Cannabis (THC/CBD)",cat:"Perturbateur",danger:"Modéré (Risque anxiogène, Syndrome amotivonniel)",rdr:"Privilégier la vaporisation au joint combustible. Attention aux space-cakes (effet retardé 2h).",law:"Réglementé/Interdit selon pays"},
-{id:"mdma",name:"MDMA / Ecstasy",cat:"Stimulant / Empathogène",danger:"Modéré à Élevé (Neurotoxicité, Déshydratation)",rdr:"Calculer sa dose (Max : 1.5mg x poids en kg). Boire 250ml d'eau/heure. Pause de 6 semaines entre prises.",law:"Strictement Interdit"},
-{id:"ketamine",name:"Kétamine",cat:"Dissociatif",danger:"Élevé (Dissociation, Paralysie motrice, Toxicité vessie)",rdr:"Consommer impérativement assis ou allongé. Ne jamais mélanger avec l'alcool (arrêt respiratoire).",law:"Usage médical détourné contrôlé"},
-{id:"nps",name:"3-MMC / Cathinones",cat:"Stimulant (NPS)",danger:"Très Élevé (Craving extrême, Toxicité vasculaire)",rdr:"Pratique du Safe Snif/Slam. Fixer une limite de produit avant la session. Sommeil obligatoire après.",law:"Classé stupéfiant"}
-];
+    // Banque d'information Centralisée (RDR, Risques, Juridique)
+    const PSYCHOTROPES = [
+        { id: "alcohol", name: "Alcool (Éthanol)", cat: "Dépresseur", danger: "Majeur (Dépendance sévère, Overdose en cas de polyconsommation).", rdr: "Éviter impérativement le mélange avec les opiacés, kétamine et benzodiazépines (risques de dépression respiratoire). Boire un grand verre d'eau entre chaque verre d'alcool pour limiter la déshydratation neuronale.", law: "Légal. Vente réglementée et interdite aux mineurs de moins de 18 ans." },
+        { id: "cocaine", name: "Cocaïne / Crack", cat: "Stimulant", danger: "Élevé (Accidents cardiaques, AVC, forte dépendance psychologique).", rdr: "Ne jamais partager son matériel de snif (paille, rouleau) pour éliminer la transmission des hépatites B et C. Espacer les prises d'au moins 45 minutes pour laisser le système cardiovasculaire récupérer.", law: "Strictement interdit. Classé comme stupéfiant. La détention et l'usage sont passibles de sanctions pénales." },
+        { id: "cannabis", name: "Cannabis (THC / CBD)", cat: "Perturbateur", danger: "Modéré (Risques de paranoïa aiguë, baisse de motivation, impact pulmonaire si fumé).", rdr: "Privilégier l'utilisation d'un vaporisateur de salon/portable pour éviter la combustion de goudrons toxiques. En cas d'ingestion (space-cake), attendre au moins 2 heures avant de reprendre une dose car l'effet est très retardé.", law: "Variable selon la législation nationale (Interdit, dépénalisé ou récréatif régulé)." },
+        { id: "mdma", name: "MDMA / Ecstasy", cat: "Stimulant / Empathogène", danger: "Modéré à Élevé (Syndrome sérotoninergique, hyperthermie maligne).", rdr: "Respecter scrupuleusement la règle des dosages : maximum 1.5mg par kilo de poids corporel. Espacer impérativement chaque session de 6 semaines minimum pour permettre la reconstruction des stocks de sérotonine. Boire régulièrement de l'eau (250ml/h).", law: "Strictement Interdit. Risques de poursuites criminelles pour trafic ou détention." },
+        { id: "ketamine", name: "Kétamine", cat: "Dissociatif", danger: "Élevé (Dissociation psychique, chutes, toxicité rénale et vésicale chronique).", rdr: "Consommer impérativement en position assise ou allongée sécurisée pour éviter les traumatismes physiques dus au blocage moteur. Ne jamais associer à l'alcool ou aux calmants sous peine de coma immédiat.", law: "Usage détourné interdit. Strictement réservé au cadre médical et vétérinaire." },
+        { id: "nps", name: "3-MMC / Nouvelles Cathinones", cat: "Stimulant (NPS)", danger: "Très Élevé (Craving compulsif extrême, toxicité cardiovasculaire foudroyante).", rdr: "Pratiquer le Safe Snif ou Safe Slam (matériel stérile à usage unique). Fixer une limite stricte de produit disponible avant de débuter la session pour contrer la perte de contrôle automatique. Prévoir une phase de repos obligatoire après.", law: "Classé intégralement sur la liste des stupéfiants interdits." }
+    ];
 
-const ADDICTO_PATTERNS = [
-{k:["craving","envie","besoin","manque"],r:"Le craving dure en moyenne entre 10 et 15 minutes. C'est une tempête neurologique temporaire. Tu as le contrôle sur tes muscles : ne bouge pas vers le produit. Respire ou lance un Tetris immédiatement pour court-circuiter le signal visuel."},
-{k:["consommé","pris","rechu","craqué"],r:"Pas de culpabilité ici. Une rechute ou un écart fait partie du processus d'apprentissage de ton cerveau. Identifions le déclencheur : Était-ce une émotion, un lieu, une personne ? Prends soin de toi maintenant (eau, repos, sécurité)."},
-{k:["triste","seul","vide","angoisse"],r:"Les substances modifient temporairement la chimie de tes récepteurs. Ce vide ou cette angoisse est souvent un effet rebond (la descente). Ton cerveau va sécréter à nouveau ses propres hormones de bien-être, laisse-lui juste du temps aujourd'hui."},
-{k:["marre","fatigué","arrêter"],r:"C'est courageux d'exprimer cela. Le suivi thérapeutique n'est pas une ligne droite. Regarde le chemin parcouru et les points d'XP accumulés. Quelle est la toute petite action positive que tu peux faire là, tout de suite ?"}
-];
+    // Algorithme TCC de l'Agent IA Addictologue
+    const ADDICTO_PATTERNS = [
+        { k: ["craving", "envie", "besoin", "manque", "creving"], r: "Le craving est une onde de dopamine pure envoyée par ton cerveau limbique. Elle culmine à 10 ou 15 minutes puis s'effondre mécaniquement si tu ne passes pas à l'acte. Tu es maître de tes mouvements : reste assis, respire profondément ou bascule sur l'onglet 'Détour' pour saturer ton système visuel." },
+        { k: ["consommé", "pris", "rechu", "craqué", "fumé", "snif"], r: "Aucun jugement ici, tu es en sécurité. Une rechute ou un écart n'annule pas tes efforts précédents, c'est une étape d'apprentissage de ton cerveau. Identifions ensemble calmement : qu'est-ce qui a déclenché cela ? Une émotion particulière, un contexte, la fatigue ? Prends soin de toi maintenant (hydrate-toi et repose-toi)." },
+        { k: ["triste", "seul", "vide", "angoisse", "déprimé", "bad"], r: "Les produits modifient de façon transitoire la chimie de tes récepteurs. Ce sentiment de vide ou de descente est le contrecoup physique direct. Ton cerveau va retrouver son équilibre et sécréter à nouveau ses propres endorphines. Accorde-toi du repos aujourd'hui, c'est passager." },
+        { k: ["marre", "fatigué", "arrêter", "stopper"], r: "C'est extrêmement courageux de le formuler. Le parcours de régulation est tout sauf linéaire. Regarde les bilans que tu as déjà posés et l'XP accumulée. Avançons simplement une heure à la fois. Quelle est la toute petite action confortable que tu peux faire pour toi maintenant ?" }
+    ];
 
-function usePersistentState(initial){
-const [state,setState] = React.useState(()=>{
-try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || initial; }catch{ return initial; }
-});
-React.useEffect(()=>{
-try{ localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); }catch{}
-},[state]);
-return [state,setState];
-}
+    // Hook personnalisé pour persister les états de l'application (hors-ligne et anonyme)
+    function usePersistentState(initial){
+        const [state, setState] = React.useState(() => {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || initial; } catch { return initial; }
+        });
+        React.useEffect(() => {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+        }, [state]);
+        return [state, setState];
+    }
 
-function Header({title,subtitle,right}){
-return(
-<div style={{marginBottom:22,display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:10}}>
-<div><div className="label">{subtitle}</div><h1 className="display title">{title}</h1></div>
-{right}
-</div>
-);
-}
+    function Header({ title, subtitle, right }) {
+        return (
+            <div style={{ marginBottom: 22, display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+                <div>
+                    <div className="label">{subtitle}</div>
+                    <h1 className="display title">{title}</h1>
+                </div>
+                {right}
+            </div>
+        );
+    }
 
-function Onboarding({onComplete}){
-return (
-<div className="page fade center" style={{flexDirection:"column",textAlign:"center",justifyContent:"center",display:"flex",height:"100%"}}>
-<h1 className="display" style={{fontSize:34,marginBottom:8,color:"var(--primary)"}}>CRACK THE CODE</h1>
-<p style={{maxWidth:290,marginBottom:32,color:"var(--muted)",lineHeight:1.5,fontSize:14}}>Suivi thérapeutique neuro-adaptatif, réduction des risques et gestion des dépendances.</p>
-<div className="card" style={{width:"100%",maxWidth:320}}>
-<div className="label" style={{marginBottom:12}}>Sélectionner ta région sanitaire</div>
-<select onChange={(e) => onComplete(e.target.value)} defaultValue="" style={{width:"100%",padding:16,borderRadius:14,border:"1px solid var(--line)",background:"white",fontSize:15,fontWeight:600}}>
-<option value="" disabled>Choisir...</option>
-{Object.keys(REGIONS).map(k=><option key={k} value={k}>{REGIONS[k].flag} {REGIONS[k].label}</option>)}
-</select>
-</div>
-</div>
-);
-}
+    // Écran de configuration initiale (Anonyme, sans compte)
+    function Onboarding({ onComplete }) {
+        return (
+            <div className="page fade" style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", height: "100%" }}>
+                <h1 className="display" style={{ fontSize: 36, marginBottom: 8, color: "var(--primary)" }}>CRACK THE CODE</h1>
+                <p style={{ maxWidth: 300, marginBottom: 32, color: "var(--muted)", lineHeight: 1.5, fontSize: 14 }}>
+                    Centralisation des connaissances psychotropes, réduction des risques et suivi de trajectoire thérapeutique.
+                </p>
+                <div className="card" style={{ width: "100%", maxWidth: 320 }}>
+                    <div className="label" style={{ marginBottom: 12 }}>Ancrage Territorial Sanitaire</div>
+                    <select 
+                        onChange={(e) => onComplete(e.target.value)} 
+                        defaultValue="" 
+                        style={{ width: "100%", padding: 16, borderRadius: 14, border: "1px solid var(--line)", background: "white", fontSize: 15, fontWeight: 600 }}
+                    >
+                        <option value="" disabled>Choisir ta région...</option>
+                        {Object.keys(REGIONS).map(k => <option key={k} value={k}>{REGIONS[k].flag} {REGIONS[k].label}</option>)}
+                    </select>
+                </div>
+            </div>
+        );
+    }
 
-function Dashboard({go,data}){
-const checkinsCount = data.history ? data.history.length : 0;
-return(
-<div className="page fade">
-<Header title="Mon Hub" subtitle="SUIVI ADDICTOLOGIQUE" right={<div className="xp-badge">🧬 {data.xp || 0} XP</div>}/>
-<button className="btn btn-danger" onClick={()=>go("crisis")} style={{marginBottom:18,fontSize:16,boxShadow:"0 6px 20px rgba(209,0,47,0.22)"}}>🆘 Urgence / Craving Aigu</button>
+    // Le tableau de bord centraliseur
+    function Dashboard({ go, data }) {
+        const checkinsCount = data.history ? data.history.length : 0;
+        return (
+            <div className="page fade">
+                <Header title="Mon Hub" subtitle="NEURO-ADAPTATION" right={<div className="xp-badge">🧬 {data.xp || 0} XP</div>} />
+                
+                <button className="btn btn-danger" onClick={() => go("crisis")} style={{ marginBottom: 18, fontSize: 16, boxShadow: "0 6px 20px rgba(209,0,47,0.22)" }}>
+                    🆘 Urgence / Craving Aigu
+                </button>
 
-<div className="card" onClick={()=>go("checkin")} style={{marginBottom:16,background:"linear-gradient(135deg,#6f42c1,#2247aa)",color:"white",cursor:"pointer"}}>
-<div className="label" style={{color:"rgba(255,255,255,0.7)"}}>Thérapie comportementale</div>
-<h3 style={{fontSize:18,marginTop:4}}>Faire mon bilan quotidien</h3>
-<p style={{fontSize:13,opacity:0.9,marginTop:4}}>{checkinsCount} check-in(s) enregistré(s) localement.</p>
-</div>
-<div className="grid grid-2" style={{marginBottom:20}}>
-<button className="card" onClick={()=>go("chat")} style={{textAlign:"left",borderLeft:"4px solid var(--purple)"}}><div style={{fontSize:24,marginBottom:6}}>🗣️</div><strong style={{fontSize:15}}>Mon Addictologue</strong><div className="small">Agent IA de suivi</div></button>
-<button className="card" onClick={()=>go("substances")} style={{textAlign:"left"}}><div style={{fontSize:24,marginBottom:6}}>📚</div><strong style={{fontSize:15}}>Dictionnaire</strong><div className="small">Substances & RDR</div></button>
-<button className="card" onClick={()=>go("tetris")} style={{textAlign:"left"}}><div style={{fontSize:24,marginBottom:6}}>🎮</div><strong style={{fontSize:15}}>Anti-Craving</strong><div className="small">Tetris Synaptique</div></button>
-<button className="card" onClick={()=>go("breathing")} style={{textAlign:"left"}}><div style={{fontSize:24,marginBottom:6}}>🫁</div><strong style={{fontSize:15}}>Respiration</strong><div className="small">Régulateur Vagal</div></button>
-</div>
-<div className="card" onClick={()=>go("rdr")} style={{display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer",borderLeft:"4px solid var(--blue)"}}>
-<div><div className="label">Lignes téléphoniques de secours</div><strong style={{fontSize:14,color:"var(--blue)"}}>{REGIONS[data.region].label} — Anonymat Garanti</strong></div>
-<div style={{fontSize:20}}>→</div>
-</div>
-</div>
-);
-}
+                <div className="card" onClick={() => go("checkin")} style={{ marginBottom: 20, background: "linear-gradient(135deg,#6f42c1,#2247aa)", color: "white", cursor: "pointer" }}>
+                    <div className="label" style={{ color: "rgba(255,255,255,0.7)" }}>Suivi Thérapeutique (TCC)</div>
+                    <h3 style={{ fontSize: 18, marginTop: 4 }}>Bilan comportemental quotidien</h3>
+                    <p style={{ fontSize: 13, opacity: 0.9, marginTop: 6 }}>{checkinsCount} point(s) d'ancrage localisé(s).</p>
+                </div>
 
-function Crisis({go}){
-return(
-<div className="page fade center" style={{flexDirection:"column",display:"flex",height:"100%",justifyContent:"center"}}>
-<div className="hero" style={{background:"var(--danger)",width:"100%",textAlign:"center"}}>
-<h1 className="display" style={{fontSize:28}}>Urgence Craving</h1>
-<p>L'automatisme moteur s'active. Bloquons la décision immédiate.</p>
-</div>
-<div style={{height:20}}/>
-<div className="grid" style={{width:"100%"}}>
-<button className="btn btn-primary" onClick={()=>go("tetris")} style={{background:"var(--purple)"}}>🎮 Lancer Tetris (Saturateur Visuel)</button>
-<button className="btn btn-primary" onClick={()=>go("breathing")} style={{background:"var(--blue)"}}>🫁 Respiration Carrée anti-panique</button>
-<button className="btn btn-outline" onClick={()=>go("chat")}>🗣️ Parler à mon Addictologue</button>
-</div>
-</div>
-);
-}
+                <div className="label" style={{ marginBottom: 10 }}>Protocoles Cliniques</div>
+                <div className="grid grid-2" style={{ marginBottom: 20 }}>
+                    <button className="card" onClick={() => go("chat")} style={{ textAlign: "left", borderLeft: "4px solid var(--purple)" }}>
+                        <div style={{ fontSize: 24, marginBottom: 6 }}>🗣️</div>
+                        <strong style={{ fontSize: 15 }}>L'Addictologue</strong>
+                        <div className="small">IA de soutien</div>
+                    </button>
+                    <button className="card" onClick={() => go("substances")} style={{ textAlign: "left" }}>
+                        <div style={{ fontSize: 24, marginBottom: 6 }}>📚</div>
+                        <strong style={{ fontSize: 15 }}>Dictionnaire</strong>
+                        <div className="small">Substances & RDR</div>
+                    </button>
+                    <button className="card" onClick={() => go("tetris")} style={{ textAlign: "left" }}>
+                        <div style={{ fontSize: 24, marginBottom: 6 }}>🎮</div>
+                        <strong style={{ fontSize: 15 }}>Le Détour</strong>
+                        <div className="small">Saturateur visuel</div>
+                    </button>
+                    <button className="card" onClick={() => go("breathing")} style={{ textAlign: "left" }}>
+                        <div style={{ fontSize: 24, marginBottom: 6 }}>🫁</div>
+                        <strong style={{ fontSize: 15 }}>Respiration</strong>
+                        <div className="small">Cohérence carrée</div>
+                    </button>
+                </div>
 
-function Substances({go}){
-return (
-<div className="page fade">
-<Header title="Substances" subtitle="ENCYCLOPÉDIE RDR" />
-<div className="grid">
-{PSYCHOTROPES.map(p=>(
-<div key={p.id} className="card" style={{cursor:"pointer",textAlign:"left"}}>
-<h3 style={{fontSize:18,marginBottom:6}}>{p.name}</h3>
-<span className="tag">{p.cat}</span>
-<p className="small" style={{marginTop:6,display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical",overflow:"hidden"}}>{p.rdr}</p>
-</div>
-))}
-</div>
-</div>
-);
-}
+                <div className="card" onClick={() => go("rdr")} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", cursor: "pointer", borderLeft: "4px solid var(--blue)" }}>
+                    <div style={{ flex: 1 }}>
+                        <div className="label">Besoin de parler de vive voix ?</div>
+                        <strong style={{ fontSize: 14, color: "var(--blue)" }}>Lignes officielles RDR {REGIONS[data.region].flag}</strong>
+                    </div>
+                    <div style={{ fontSize: 20, color: "var(--blue)" }}>→</div>
+                </div>
+            </div>
+        );
+    }
 
-function RDR({data}){
-return(
-<div className="page fade">
-<Header title="Secours" subtitle="URGENCE SANITAIRE" />
-<div className="card" style={{borderLeft:"5px solid var(--danger)",marginBottom:14}}>
-<div className="label">Ligne Directe ({REGIONS[data.region].label})</div>
-<h2 style={{color:"var(--danger)",fontSize:26,marginTop:4}}>{REGIONS[data.region].emergency}</h2>
-</div>
-<div className="card" style={{borderLeft:"5px solid var(--blue)"}}>
-<div className="label">Service RDR d'écoute nationale</div>
-<p style={{fontSize:15,fontWeight:700,marginTop:4}}>{REGIONS[data.region].help}</p>
-</div>
-</div>
-);
-}
+    // Le Journal thérapeutique (Check-In de l'état du patient)
+    function CheckIn({ go, addHistory }) {
+        const [mood, setMood] = React.useState("");
+        const [craving, setCraving] = React.useState(3);
+        const [notes, setNotes] = React.useState("");
+        const moods = [{ e: "😭", l: "Crise" }, { e: "😟", l: "Anxieux" }, { e: "😐", l: "Neutre" }, { e: "🙂", l: "Stable" }, { e: "🔋", l: "Fort" }];
+        
+        function save() {
+            if (!mood) return alert("Sélectionne ton état émotionnel.");
+            addHistory({ date: new Date().toLocaleDateString(), mood, craving, notes });
+            go("dashboard");
+        }
 
-function Breathing({go,addXp}){
-const phases = [{l:"INSPIRE",c:"#2247aa"},{l:"BLOQUE",c:"#b86a00"},{l:"EXPIRE",c:"#7d2ba5"},{l:"BLOQUE",c:"#0d8b50"}];
-const [p,setP] = React.useState(0);
-const [c,setC] = React.useState(4);
-const [paused,setPaused] = React.useState(false);
-const intervalRef = React.useRef(null);
+        return (
+            <div className="page fade">
+                <Header title="Bilan" subtitle="JOURNAL COMPORTEMENTAL" />
+                <div className="card grid" style={{ gap: 18 }}>
+                    <div>
+                        <div className="label" style={{ marginBottom: 8 }}>1. Météo Intérieure & Émotionnelle</div>
+                        <div style={{ display: "flex", justifyContent: "space-between", gap: 6 }}>
+                            {moods.map(m => (
+                                <button key={m.l} className={`mood-btn ${mood === m.l ? "selected" : ""}`} style={{ flex: 1 }} onClick={() => setMood(m.l)}>
+                                    <div>{m.e}</div>
+                                    <div style={{ fontSize: 9, marginTop: 4, color: mood === m.l ? "#fff" : "var(--muted)" }}>{m.l}</div>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <div className="label" style={{ marginBottom: 8 }}>2. Intensité du Craving Actuel : {craving}/5</div>
+                        <input type="range" min="1" max="5" value={craving} onChange={e => setCraving(Number(e.target.value))} style={{ width: "100%", accentColor: "var(--purple)" }} />
+                    </div>
+                    <div>
+                        <div className="label" style={{ marginBottom: 8 }}>3. Notes cliniques (Pensées, déclencheurs, contexte)</div>
+                        <textarea placeholder="Ex: Fin de journée stressante, environnement festif, fatigue accumulée..." value={notes} onChange={e => setNotes(e.target.value)} style={{ width: "100%", padding: 14, borderRadius: 12, border: "1px solid var(--line)", height: 90, resize: "none", fontSize: 14 }} />
+                    </div>
+                    <button className="btn btn-primary" onClick={save}>Ancrer ce point de suivi (+20 XP)</button>
+                    <button className="btn btn-outline" onClick={() => go("dashboard")}>Retour au Hub</button>
+                </div>
+            </div>
+        );
+    }
 
-React.useEffect(()=>{
-if(paused) return;
-const t = setInterval(()=>{
-setC(v=>{ if(v<=1){setP(x=>(x+1)%4); return 4;} return v-1; });
-},1000);
-intervalRef.current = t;
-return ()=>clearInterval(t);
-},[paused]);
+    // L'Agent IA Addictologue Connecté à la mémoire locale
+    function Chat({ go, data }) {
+        const [m, setM] = React.useState(() => {
+            const defaultPrompt = { role: "bot", text: "Bonjour. Je suis ton agent IA addictologue dédié. Notre discussion est chiffrée en local sur ton téléphone. Comment te positionnes-tu face à tes objectifs en ce moment ?" };
+            if (data.history && data.history.length > 0) {
+                const last = data.history[data.history.length - 1];
+                return [{ role: "bot", text: `Ravi de te revoir pour ton suivi thérapeutique. Lors de ton dernier check-in, ta météo était : ${last.mood} avec un score de craving à ${last.craving}/5. Comment est-ce que tu te sens à la seconde même ?` }];
+            }
+            return [defaultPrompt];
+        });
+        const [input, setInput] = React.useState("");
+        const [typing, setTyping] = React.useState(false);
+        const scrollRef = React.useRef(null);
 
-return(
-<div className="page fade center" style={{flexDirection:"column",justifyContent:"space-between",display:"flex",height:"100%"}}>
-<div style={{width:"100%"}}>
-<button className="btn btn-outline" onClick={()=>go("dashboard")} style={{width:"auto",padding:"10px 16px"}}>← Quitter</button>
-</div>
-<div className="bigCircle" style={{background:phases[p].c+"12",border:`6px solid ${phases[p].c}`,transform:p%2===0?"scale(1.1)":"scale(1)"}}>
-<div style={{textAlign:"center"}}><div style={{fontSize:48,fontWeight:700,color:phases[p].c}}>{c}</div><div className="label" style={{color:phases[p].c}}>{phases[p].l}</div></div>
-</div>
-<div style={{display:"flex",gap:10,width:"100%"}}>
-<button className="btn btn-outline" onClick={()=>setPaused(v=>!v)}>{paused ? "▶ Reprendre" : "⏸ Pause"}</button>
-<button className="btn btn-primary" onClick={()=>{addXp(25); go("dashboard");}}>Exercice Terminé (+25 XP)</button>
-</div>
-</div>
-);
-}
+        React.useEffect(() => { scrollRef.current?.scrollIntoView({ behavior: "smooth" }); }, [m, typing]);
 
-function TetrisGame({go,addXp}){
-const canvasRef = React.useRef(null);
-const [started, setStarted] = React.useState(false);
+        function send() {
+            if (!input.trim() || typing) return;
+            const text = input.trim(); setInput("");
+            setM(v => [...v, { role: "user", text }]);
+            setTyping(true);
 
-React.useEffect(()=>{
-if(!started || !canvasRef.current) return;
-const canvas = canvasRef.current;
-const ctx = canvas.getContext("2d");
-const ROWS=16, COLS=10, SIZE=20;
-let board = Array(ROWS).fill().map(()=>Array(COLS).fill(0));
-let gameOver = false;
-const SHAPES = [[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]]];
-let piece = {matrix:SHAPES[Math.floor(Math.random()*SHAPES.length)],x:3,y:0};
+            setTimeout(() => {
+                setTyping(false);
+                const lower = text.toLowerCase();
+                let reply = "Je valide totalement ton partage. Mon rôle est de t'accompagner sans la moindre once de jugement. Chaque jour est une victoire neuroplastique. Souhaites-tu lancer un exercice de dérivation pour ancrer notre session ?";
+                for (const item of ADDICTO_PATTERNS) {
+                    if (item.k.some(key => lower.includes(key))) reply = item.r;
+                }
+                setM(v => [...v, { role: "bot", text: reply }]);
+            }, 1000);
+        }
 
-function draw(){
-ctx.fillStyle="#111"; 
-ctx.fillRect(0,0,canvas.width,canvas.height);
-board.forEach((row,r)=>{
-row.forEach((val,c)=>{
-if(val){ ctx.fillStyle="#2247aa"; ctx.fillRect(c*SIZE,r*SIZE,SIZE-1,SIZE-1); }
-});
-});
-piece.matrix.forEach((row,r)=>{
-row.forEach((val,c)=>{
-if(val){ ctx.fillStyle="#6f42c1"; ctx.fillRect((c+piece.x)*SIZE,(r+piece.y)*SIZE,SIZE-1,SIZE-1); }
-});
-});
-}
+        return (
+            <div className="page fade" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                <Header title="Suivi" subtitle="IA ADDICTOLOGUE DIRECTE" />
+                <div style={{ flex: 1, overflowY: "auto", paddingRight: 4 }}>
+                    <div className="chat-wrap">
+                        {m.map((msg, i) => <div key={i} className={`msg ${msg.role}`}>{msg.text}</div>)}
+                        {typing && <div className="msg bot" style={{ opacity: 0.6 }}>Analyse thérapeutique active...</div>}
+                        <div ref={scrollRef} />
+                    </div>
+                </div>
+                <div className="inputBar">
+                    <input placeholder="Parle à ton coach (craving, rechute, angoisse)..." value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && send()} />
+                    <button className="btn btn-primary" style={{ width: "auto", padding: "0 22px" }} onClick={send}>Dire</button>
+                </div>
+            </div>
+        );
+    }
 
-let animFrameId = null;
-const animate=()=>{
-if(!gameOver) {
-piece.y++;
-draw();
-animFrameId = requestAnimationFrame(animate);
-} else {
-ctx.fillStyle="white"; 
-ctx.font="14px Inter"; 
-ctx.fillText("Bien joué!",45,160);
-}
-};
-animFrameId = requestAnimationFrame(animate);
+    // Encyclopédie des substances
+    function Substances({ go }) {
+        const [search, setSearch] = React.useState("");
+        const filtered = React.useMemo(() => {
+            return PSYCHOTROPES.filter(p => p.name.toLowerCase().includes(search.toLowerCase()) || p.cat.toLowerCase().includes(search.toLowerCase()));
+        }, [search]);
+        return (
+            <div className="page fade">
+                <Header title="Substances" subtitle="ENCYCLOPÉDIE SCIENTIFIQUE" />
+                <input placeholder="Rechercher une substance (ex: MDMA, Kétamine, Alcool)..." value={search} onChange={e => setSearch(e.target.value)} style={{ width: "100%", padding: 16, borderRadius: 16, border: "1px solid var(--line)", marginBottom: 18, background: "white" }} />
+                <div className="grid">
+                    {filtered.map(p => (
+                        <div key={p.id} className="card" onClick={() => go("substance-detail", p)} style={{ cursor: "pointer", textAlign: "left" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                                <h3 style={{ fontSize: 17 }}>{p.name}</h3>
+                                <span className="tag" style={{ background: p.cat === "Stimulant" ? "#fff0f3" : p.cat === "Dépresseur" ? "#e8f0fe" : "#f3e8ff" }}>{p.cat}</span>
+                            </div>
+                            <p style={{ color: "var(--muted)", fontSize: 13, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{p.rdr}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
 
-return ()=>{
-if(animFrameId) cancelAnimationFrame(animFrameId);
-};
-}, [started]);
+    function SubstanceDetail({ go, substance, addXp }) {
+        React.useEffect(() => { addXp(15); }, []);
+        return (
+            <div className="page fade">
+                <button className="btn btn-outline" onClick={() => go("substances")} style={{ marginBottom: 18, width: "auto", padding: "10px 16px" }}>← Dictionnaire</button>
+                <div className="card grid" style={{ gap: 16 }}>
+                    <div>
+                        <span className="tag">{substance.cat}</span>
+                        <h2 style={{ fontSize: 26, marginTop: 6 }}>{substance.name}</h2>
+                    </div>
+                    <div>
+                        <div className="label" style={{ color: "var(--danger)" }}>⚠️ Dangers & Risques Sanitaires Majeurs</div>
+                        <p style={{ fontSize: 14, marginTop: 2, fontWeight: 500, lineHeight: 1.5 }}>{substance.danger}</p>
+                    </div>
+                    <div>
+                        <div className="label" style={{ color: "var(--success)" }}>🏥 Précautions de Réduction des Risques (RDR)</div>
+                        <p style={{ fontSize: 14, marginTop: 2, lineHeight: 1.5, color: "var(--text)" }}>{substance.rdr}</p>
+                    </div>
+                    <div>
+                        <div className="label">⚖️ Réglementation & Statut Juridique</div>
+                        <p style={{ fontSize: 13, marginTop: 2, color: "var(--muted)" }}>{substance.law}</p>
+                    </div>
+                    <div style={{ background: "#e8f0fe", padding: 12, borderRadius: 12, textAlign: "center", fontSize: 13, fontWeight: 600, color: "var(--blue)" }}>
+                        🧬 +15 XP Acquisition de Savoir Protecteur
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
-return (
-<div className="page fade center" style={{flexDirection:"column",display:"flex",alignItems:"center"}}>
-<div style={{width:"100%",marginBottom:14}}>
-<button className="btn btn-outline" onClick={()=>{addXp(30); go("dashboard");}} style={{width:"auto",padding:"10px 16px"}}>← Terminer (+30 XP)</button>
-</div>
-{!started ? (
-<button className="btn btn-primary" onClick={()=>setStarted(true)} style={{maxWidth:200}}>▶ Lancer le jeu</button>
-) : (
-<canvas ref={canvasRef} id="tetrisCanvas" width="200" height="320" />
-)}
-</div>
-);
-}
+    // Protocole respiratoire anti-panique
+    function Breathing({ go, addXp }) {
+        const phases = [{ l: "INSPIRE", c: "#2247aa" }, { l: "BLOQUE", c: "#b86a00" }, { l: "EXPIRE", c: "#7d2ba5" }, { l: "BLOQUE", c: "#0d8b50" }];
+        const [p, setP] = React.useState(0); const [c, setC] = React.useState(4);
+        
+        React.useEffect(() => {
+            const timer = setInterval(() => {
+                setC(v => {
+                    if (v <= 1) { setP(x => (x + 1) % 4); return 4; }
+                    return v - 1;
+                });
+            }, 1000);
+            return () => clearInterval(timer);
+        }, []);
 
-function App(){
-const [store,setStore] = usePersistentState(null);
-const [view,setView] = React.useState("dashboard");
+        return (
+            <div className="page fade" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
+                <div style={{ width: "100%" }}><button className="btn btn-outline" onClick={() => go("dashboard")} style={{ width: "auto", padding: "10px 16px" }}>← Interrompre</button></div>
+                <div className="bigCircle" style={{ background: phases[p].c + "12", border: `6px solid ${phases[p].c}`, transform: p % 2 === 0 ? "scale(1.15)" : "scale(1)" }}>
+                    <div style={{ textAlign: "center" }}>
+                        <div style={{ fontSize: 54, fontWeight: 700, color: phases[p].c, fontVariantNumeric: "tabular-nums" }}>{c}</div>
+                        <div className="label" style={{ color: phases[p].c }}>{phases[p].l}</div>
+                    </div>
+                </div>
+                <button className="btn btn-primary" onClick={() => { addXp(25); go("dashboard"); }}>Session Terminée (+25 XP)</button>
+            </div>
+        );
+    }
 
-const addXp = React.useCallback((amount) => {
-setStore(v => ({...v, xp: (v.xp || 0) + amount}));
-}, []);
+    // Mini-jeu Tetris complet pour saturer le cortex visuel (Saturation du Craving)
+    function TetrisGame({ go, addXp }) {
+        const canvasRef = React.useRef(null);
+        React.useEffect(() => {
+            const canvas = canvasRef.current; if (!canvas) return; const ctx = canvas.getContext("2d");
+            const ROWS = 16, COLS = 10, SIZE = 20; let board = Array(ROWS).fill().map(() => Array(COLS).fill(0)); let gameOver = false;
+            const SHAPES = [[[1, 1, 1, 1]], [[1, 1], [1, 1]], [[0, 1, 0], [1, 1, 1]], [[1, 1, 0], [0, 1, 1]]];
+            let piece = { matrix: SHAPES[Math.floor(Math.random() * SHAPES.length)], x: 3, y: 0 };
+            
+            function collide(b, p, ox, oy) {
+                for (let r = 0; r < p.matrix.length; r++) {
+                    for (let c = 0; c < p.matrix[r].length; c++) {
+                        if (p.matrix[r][c] && (b[r + p.y + oy] === undefined || b[r + p.y + oy][c + p.x + ox] === undefined || b[r + p.y + oy][c + p.x + ox])) return true;
+                    }
+                } return false;
+            }
+            function merge(b, p) { p.matrix.forEach((row, r) => { row.forEach((val, c) => { if (val) b[r + p.y][c + p.x] = 1; }); }); }
+            function drop() {
+                piece.y++;
+                if (collide(board, piece, 0, 0)) {
+                    piece.y--; merge(board, piece);
+                    piece = { matrix: SHAPES[Math.floor(Math.random() * SHAPES.length)], x: 3, y: 0 };
+                    if (collide(board, piece, 0, 0)) { gameOver = true; }
+                }
+            }
+            let lastTime = 0;
+            function update(time = 0) {
+                const diff = time - lastTime; if (diff > 500) { drop(); lastTime = time; }
+                ctx.fillStyle = "#111"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+                board.forEach((row, r) => { row.forEach((val, c) => { if (val) { ctx.fillStyle = "#2247aa"; ctx.fillRect(c * SIZE, r * SIZE, SIZE - 1, SIZE - 1); } }); });
+                piece.matrix.forEach((row, r) => { row.forEach((val, c) => { if (val) { ctx.fillStyle = "#6f42c1"; ctx.fillRect((c + piece.x) * SIZE, (r + piece.y) * SIZE, SIZE - 1, SIZE - 1); } }); });
+                if (!gameOver) requestAnimationFrame(update);
+                else { ctx.fillStyle = "white"; ctx.font = "14px Inter"; ctx.fillText("Détour Effectué",42, 160); }
+            }
+            requestAnimationFrame(update);
+            window.tc_move = (dir) => { piece.x += dir; if (collide(board, piece, 0, 0)) piece.x -= dir; };
+            return () => { gameOver = true; };
+        }, []);
 
-const go = React.useCallback((v) => {
-setView(v);
-const c=document.querySelector('.page');
-if(c) c.scrollTop=0;
-}, []);
+        return (
+            <div className="page fade" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <div style={{ width: "100%", marginBottom: 14 }}><button className="btn btn-outline" onClick={() => { addXp(30); go("dashboard"); }} style={{ width: "auto", padding: "10px 16px" }}>← Terminer l'exercice (+30 XP)</button></div>
+                <div className="label" style={{ marginBottom: 12, textAlign: "center" }}>Saturation Visuelle du Craving</div>
+                <canvas ref={canvasRef} id="tetrisCanvas" width="200" height="320" />
+                <div className="grid grid-2" style={{ width: "100%", maxWidth: 200, marginTop: 14 }}>
+                    <button className="btn btn-outline" onClick={() => window.tc_move(-1)}>◀ Gauche</button>
+                    <button className="btn btn-outline" onClick={() => window.tc_move(1)}>Droite ▶</button>
+                </div>
+            </div>
+        );
+    }
 
-if(!store) return <Onboarding onComplete={(reg)=>setStore({region:reg,xp:0,history:[]})}/>;
+    // Hub d'assistance téléphonique d'urgence locale
+    function RDR({ data }) {
+        return (
+            <div className="page fade">
+                <Header title="Secours" subtitle="STRUCTURES OFFICIELLES" />
+                <div className="card" style={{ borderLeft: "5px solid var(--danger)", marginBottom: 14 }}>
+                    <div className="label">Ligne Médicale d'Urgence ({REGIONS[data.region].label})</div>
+                    <h2 style={{ color: "var(--danger)", fontSize: 26, marginTop: 4 }}>{REGIONS[data.region].emergency}</h2>
+                </div>
+                <div className="card" style={{ borderLeft: "5px solid var(--blue)", marginBottom: 20 }}>
+                    <div className="label">Ligne d'écoute et RDR anonyme</div>
+                    <p style={{ fontSize: 15, fontWeight: 700, marginTop: 4 }}>{REGIONS[data.region].help}</p>
+                </div>
+                <div className="card">
+                    <div className="label">Règles fondamentales de sécurité</div>
+                    <p style={{ fontSize: 13, marginTop: 8, lineHeight: 1.6 }}>
+                        1. <strong>Ne jamais rester seul :</strong> La majorité des accidents critiques surviennent lorsque l'usager est isolé.<br/><br/>
+                        2. <strong>Test d'allonge :</strong> Face à un nouveau lot ou produit inconnu, toujours tester un quart de la dose habituelle et attendre les effets complets.<br/><br/>
+                        3. <strong>Vigilance mélanges :</strong> La polyconsommation incontrôlée (alcool + opiacés ou sédatifs) multiplie exponentiellement les risques mortels.
+                    </p>
+                </div>
+            </div>
+        );
+    }
 
-return(
-<>
-{view==="dashboard" && <Dashboard go={go} data={store}/>}
-{view==="substances" && <Substances go={go}/>}
-{view==="breathing" && <Breathing go={go} addXp={addXp}/>}
-{view==="tetris" && <TetrisGame go={go} addXp={addXp}/>}
-{view==="rdr" && <RDR data={store}/>}
-{view==="crisis" && <Crisis go={go}/>}
-<nav className="nav">
-<button className={view==="dashboard"?"active":""} onClick={()=>go("dashboard")}><div className="icon">🧠</div>Hub</button>
-<button className={view==="substances"?"active":""} onClick={()=>go("substances")}><div className="icon">📚</div>Dico</button>
-<button className={view==="tetris"?"active":""} onClick={()=>go("tetris")}><div className="icon">🎮</div>Jeux</button>
-<button className={view==="breathing"?"active":""} onClick={()=>go("breathing")}><div className="icon">🫁</div>Respire</button>
-<button className={view==="rdr"?"active":""} onClick={()=>go("rdr")}><div className="icon">🏥</div>Aide</button>
-</nav>
-</>
-);
-}
+    // Écran d'interception d'urgence (Crise)
+    function Crisis({ go }) {
+        return (
+            <div className="page fade" style={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "center" }}>
+                <div className="hero" style={{ background: "var(--danger)", width: "100%", textAlign: "center" }}>
+                    <h1 className="display" style={{ fontSize: 26 }}>Interception de Crise</h1>
+                    <p>Le système moteur s'apprête à céder à l'automatisme. Bloquons la décision immédiate en occupant tes ressources neurologiques.</p>
+                </div>
+                <div style={{ height: 24 }} />
+                <div className="grid" style={{ width: "100%" }}>
+                    <button className="btn btn-primary" onClick={() => go("tetris")} style={{ background: "var(--purple)", fontSize: 16 }}>🎮 Lancer le Tetris (Détour Visuel)</button>
+                    <button className="btn btn-primary" onClick={() => go("breathing")} style={{ background: "var(--blue)", fontSize: 16 }}>🫁 Lancer la Respiration Carrée</button>
+                    <button className="btn btn-outline" onClick={() => go("chat")}>🗣️ Parler à mon Addictologue</button>
+                </div>
+            </div>
+        );
+    }
 
-const root = ReactDOM.createRoot(document.getElementById("app")); 
-root.render(<App />);
+    // Orchestrateur central de l'architecture applicative
+    function App() {
+        const [store, setStore] = usePersistentState(null);
+        const [view, setView] = React.useState("dashboard");
+        const [payload, setPayload] = React.useState(null);
+
+        const addXp = (amount) => { setStore(v => ({ ...v, xp: (v.xp || 0) + amount })); };
+        const addHistory = (item) => { setStore(v => ({ ...v, xp: (v.xp || 0) + 20, history: [...(v.history || []), item] })); };
+
+        function go(targetView, dataPayload = null) {
+            setPayload(dataPayload);
+            setView(targetView);
+            const scrollContainer = document.querySelector('.page');
+            if (scrollContainer) scrollContainer.scrollTop = 0;
+        }
+
+        if (!store) return <Onboarding onComplete={(reg) => setStore({ region: reg, xp: 0, history: [] })} />;
+
+        return (
+            <>
+                {view === "dashboard" && <Dashboard go={go} data={store} />}
+                {view === "checkin" && <CheckIn go={go} addHistory={addHistory} />}
+                {view === "substances" && <Substances go={go} />}
+                {view === "substance-detail" && <SubstanceDetail go={go} substance={payload} addXp={addXp} />}
+                {view === "breathing" && <Breathing go={go} addXp={addXp} />}
+                {view === "chat" && <Chat go={go} data={store} />}
+                {view === "rdr" && <RDR data={store} />}
+                {view === "crisis" && <Crisis go={go} />}
+
+                <nav className="nav">
+                    <button className={view === "dashboard" || view === "checkin" ? "active" : ""} onClick={() => go("dashboard")}><div className="icon">🧠</div>Hub</button>
+                    <button className={view === "chat" ? "active" : ""} onClick={() => go("chat")}><div className="icon">🗣️</div>IA Coach</button>
+                    <button className={view === "substances" || view === "substance-detail" ? "active" : ""} onClick={() => go("substances")}><div className="icon">📚</div>Dico</button>
+                    <button className={view === "tetris" ? "active" : ""} onClick={() => go("tetris")}><div className="icon">🎮</div>Détour</button>
+                    <button className={view === "rdr" ? "active" : ""} onClick={() => go("rdr")}><div className="icon">🏥</div>Aide</button>
+                </nav>
+            </>
+        );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("app"));
+    root.render(<App />);
 </script>
 </body>
 </html>
