@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RDR & Addictologue IA · CTC V6</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+--ink:#0d0d0d;--ink3:#666;--red:#d4001a;--blue:#0f2f7a;
+--cream:#f7f5f0;--white:#fff;--border:#e0dbd0;
+--fa:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box}
+body{background:var(--cream);font-family:var(--fb);max-width:430px;margin:auto;color:var(--ink);padding:24px}
+h1,h2{font-family:var(--fa)}
+.card{background:#fff;border:1.5px solid var(--border);border-radius:4px;padding:16px;margin:12px 0}
+.badge{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3)}
+.title{font-size:36px;font-weight:800;line-height:1}
+.red{color:var(--red)}
+.grid{display:grid;gap:10px}
+textarea,select,input{width:100%;padding:12px;border:1px solid var(--border);background:#fff}
+button{width:100%;padding:14px;background:var(--ink);color:#fff;border:none;font-family:var(--fa);font-weight:700}
+.small{font-size:12px;color:var(--ink3)}
+.risk{padding:10px;background:rgba(212,0,26,.06);border:1px solid rgba(212,0,26,.15)}
+ul{padding-left:18px}
+</style>
+</head>
+<body>
+
+<div class="badge">CRACK THE CODE · V6</div>
+<h1 class="title">RDR & <span class="red">Addictologue IA</span></h1>
+
+<div class="card">
+<h2>Urgences</h2>
+<div class="risk">
+112 (BE/CH/LU) · 15 (FR) · 911 (CA)<br>
+Appelez immédiatement en cas de perte de conscience, détresse respiratoire, convulsions, idées suicidaires ou suspicion d'overdose.
+</div>
+</div>
+
+<div class="card">
+<h2>Addictologue IA</h2>
+<p class="small">Analyse éducative fondée sur les neurosciences, la réduction des risques, l'entretien motivationnel et les TCC.</p>
+<textarea id="situation" rows="7" placeholder="Décrivez votre situation..."></textarea>
+<button onclick="analyse()">Analyser</button>
+<pre id="result"></pre>
+</div>
+
+<div class="card">
+<h2>Réduction des risques</h2>
+<div class="grid">
+<div><strong>Alcool</strong><br><span class="small">Hydratation, éviter les mélanges dépresseurs.</span></div>
+<div><strong>Cannabis</strong><br><span class="small">Attention anxiété, conduite, concentration.</span></div>
+<div><strong>MDMA</strong><br><span class="small">Température, hydratation raisonnée, repos.</span></div>
+<div><strong>Stimulants</strong><br><span class="small">Risque cardiovasculaire et manque de sommeil.</span></div>
+<div><strong>Opioïdes</strong><br><span class="small">Risque d'overdose, naloxone si disponible.</span></div>
+<div><strong>Benzodiazépines</strong><br><span class="small">Sevrage potentiellement dangereux.</span></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Auto-évaluation</h2>
+<label>Craving (0-10)</label>
+<input type="range" min="0" max="10" value="5" id="craving">
+<label>Stress (0-10)</label>
+<input type="range" min="0" max="10" value="5" id="stress">
+</div>
+
+<div class="card">
+<h2>Plan anti-rechute</h2>
+<ul>
+<li>Identifier les déclencheurs.</li>
+<li>Préparer une activité alternative.</li>
+<li>Contacter une personne ressource.</li>
+<li>Limiter l'accès au produit.</li>
+<li>Planifier les prochaines 24 heures.</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Bibliothèque scientifique</h2>
+<ul>
+<li>NIDA</li>
+<li>OMS / WHO</li>
+<li>SAMHSA</li>
+<li>Cochrane Reviews</li>
+<li>Miller & Rollnick</li>
+<li>Marlatt – Relapse Prevention</li>
+</ul>
+</div>
+
+<script>
+function analyse(){
+ const text=document.getElementById('situation').value;
+ const craving=document.getElementById('craving').value;
+ const stress=document.getElementById('stress').value;
+
+ let out=[];
+ out.push("ANALYSE STRUCTURÉE");
+ out.push("");
+ out.push("• Déclencheurs possibles à explorer.");
+ out.push("• Niveau de craving : "+craving+"/10");
+ out.push("• Niveau de stress : "+stress+"/10");
+ out.push("• Facteurs émotionnels et contextuels à évaluer.");
+ out.push("• Construire un plan de protection sur 24h.");
+ if(Number(craving)>=7) out.push("• Craving élevé : renforcer soutien social et stratégies d'évitement.");
+ if(text.length>150) out.push("• Description détaillée reçue.");
+ document.getElementById('result').textContent=out.join("\n");
+}
+</script>
+
+</body>
+</html>
