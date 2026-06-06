@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+<title>CRACK THE CODE · Suivi</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d0d0d;--ink2:#2a2a2a;--ink3:#666;
+  --red:#d4001a;--blue:#0f2f7a;--green:#1a6640;--orange:#b05800;--purple:#6a1060;
+  --cream:#f7f5f0;--cream2:#ede9e0;--white:#fff;--border:#e0dbd0;
+  --fa:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{background:var(--cream);color:var(--ink);font-family:var(--fb);max-width:430px;margin:0 auto;min-height:100vh;overflow-x:hidden;}
+
+.topbar{position:sticky;top:0;z-index:100;background:var(–white);border-bottom:1px solid var(–border);display:flex;align-items:center;justify-content:space-between;padding:14px 20px;}
+.btn-back{background:none;border:1.5px solid var(–border);border-radius:4px;padding:7px 13px;font-family:var(–fa);font-size:11px;color:var(–ink3);cursor:pointer;}
+.btn-back:active{background:var(–cream2);}
+.topbar-title{font-family:var(–fa);font-size:13px;font-weight:700;}
+
+.tabs{display:flex;background:var(–white);border-bottom:2px solid var(–border);position:sticky;top:49px;z-index:99;}
+.tab-btn{flex:1;background:none;border:none;padding:11px 4px;font-family:var(–fa);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(–ink3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;}
+.tab-btn.active{color:var(–blue);border-bottom-color:var(–blue);}
+.tab-panel{display:none;padding:16px 20px 80px;}
+.tab-panel.active{display:block;animation:fadeUp .25s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* STREAK */
+.streak-banner{background:var(–ink);color:var(–white);border-radius:4px;padding:18px;margin-bottom:14px;display:flex;align-items:center;gap:16px;}
+.streak-flame{font-size:44px;line-height:1;}
+.streak-info .streak-val{font-family:var(–fa);font-size:36px;font-weight:800;line-height:1;}
+.streak-info .streak-lbl{font-size:12px;color:rgba(255,255,255,.65);margin-top:2px;}
+.streak-info .streak-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px;}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.stat-card{background:var(–white);border:1.5px solid var(–border);border-radius:4px;padding:12px 10px;text-align:center;}
+.stat-val{font-family:var(–fa);font-size:22px;font-weight:800;}
+.stat-lbl{font-size:9px;color:var(–ink3);letter-spacing:.08em;text-transform:uppercase;margin-top:2px;}
+.stat-card.good .stat-val{color:var(–green);}
+.stat-card.warn .stat-val{color:var(–orange);}
+.stat-card.bad .stat-val{color:var(–red);}
+
+/* MINI CALENDAR */
+.section-label{font-family:var(–fa);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(–ink3);margin:14px 0 8px;}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:14px;}
+.cal-day{aspect-ratio:1;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-family:var(–fa);font-weight:700;cursor:pointer;background:var(–cream2);color:var(–ink3);}
+.cal-day.today{border:2px solid var(–ink);}
+.cal-day.header{background:none;color:var(–ink3);font-size:9px;cursor:default;aspect-ratio:auto;padding:2px 0;}
+.cal-day.clean{background:var(–green);color:var(–white);}
+.cal-day.light{background:rgba(26,102,64,.3);color:var(–green);}
+.cal-day.moderate{background:var(–orange);color:var(–white);}
+.cal-day.heavy{background:var(–red);color:var(–white);}
+.cal-day.logged{background:var(–blue);color:var(–white);}
+.cal-legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.leg-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(–ink3);}
+.leg-dot{width:10px;height:10px;border-radius:2px;}
+
+/* BAR CHART */
+.chart-wrap{background:var(–white);border:1.5px solid var(–border);border-radius:4px;padding:14px;margin-bottom:14px;}
+.chart-title{font-family:var(–fa);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(–ink3);margin-bottom:12px;}
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:100px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bar{width:100%;border-radius:3px 3px 0 0;min-height:2px;transition:height .3s ease;}
+.bar-lbl{font-size:9px;color:var(–ink3);font-family:var(–fa);}
+.bar-val{font-size:9px;color:var(–ink3);}
+
+/* LOG FORM */
+.log-form{background:var(–white);border:1.5px solid var(–border);border-radius:4px;padding:16px;margin-bottom:14px;}
+.form-title{font-family:var(–fa);font-size:14px;font-weight:700;margin-bottom:14px;}
+.form-row{margin-bottom:12px;}
+.form-label{font-family:var(–fa);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(–ink3);margin-bottom:6px;}
+.form-input{width:100%;padding:11px 13px;border:1.5px solid var(–border);border-radius:4px;font-family:var(–fb);font-size:14px;background:var(–white);outline:none;transition:border-color .2s;}
+.form-input:focus{border-color:var(–blue);}
+.form-select{width:100%;padding:11px 13px;border:1.5px solid var(–border);border-radius:4px;font-family:var(–fb);font-size:14px;background:var(–white);outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;}
+.intensity-btns{display:flex;gap:8px;}
+.int-btn{flex:1;padding:10px;border:1.5px solid var(–border);border-radius:4px;font-family:var(–fa);font-size:11px;cursor:pointer;text-align:center;background:var(–white);}
+.int-btn.active{border-color:var(–blue);background:rgba(15,47,122,.07);color:var(–blue);}
+.int-btn.c1.active{border-color:var(–green);background:rgba(26,102,64,.07);color:var(–green);}
+.int-btn.c2.active{border-color:var(–orange);background:rgba(176,88,0,.07);color:var(–orange);}
+.int-btn.c3.active{border-color:var(–red);background:rgba(212,0,26,.07);color:var(–red);}
+.btn-log{width:100%;padding:14px;font-family:var(–fa);font-size:14px;font-weight:700;background:var(–ink);color:var(–white);border:none;border-radius:4px;cursor:pointer;margin-top:4px;}
+.btn-log:active{opacity:.8;}
+.btn-log-clean{width:100%;padding:13px;font-family:var(–fa);font-size:13px;background:rgba(26,102,64,.08);color:var(–green);border:1.5px solid rgba(26,102,64,.3);border-radius:4px;cursor:pointer;margin-top:6px;}
+.btn-log-clean:active{opacity:.8;}
+
+/* LOG LIST */
+.log-entry{background:var(–white);border:1.5px solid var(–border);border-radius:4px;padding:12px 14px;margin-bottom:7px;display:flex;align-items:center;gap:12px;}
+.log-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.log-dot.clean{background:var(–green);}
+.log-dot.light{background:rgba(26,102,64,.5);}
+.log-dot.moderate{background:var(–orange);}
+.log-dot.heavy{background:var(–red);}
+.log-info{flex:1;}
+.log-sub{font-family:var(–fa);font-size:11px;color:var(–ink3);}
+.log-name{font-family:var(–fa);font-size:13px;font-weight:700;margin-bottom:1px;}
+.log-note{font-size:12px;color:var(–ink3);margin-top:2px;}
+.log-date{font-size:10px;color:var(–ink3);text-align:right;font-family:var(–fa);}
+.btn-del{background:none;border:none;color:var(–ink3);font-size:16px;cursor:pointer;padding:4px;}
+
+/* GOALS */
+.goal-card{background:var(–white);border:1.5px solid var(–border);border-radius:4px;padding:14px;margin-bottom:8px;}
+.goal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.goal-name{font-family:var(–fa);font-size:13px;font-weight:700;}
+.goal-pct{font-family:var(–fa);font-size:13px;color:var(–blue);}
+.goal-bar{height:6px;background:var(–cream2);border-radius:3px;overflow:hidden;}
+.goal-fill{height:100%;border-radius:3px;transition:width .5s ease;}
+.goal-sub{font-size:11px;color:var(–ink3);margin-top:6px;}
+.no-data{text-align:center;padding:32px;color:var(–ink3);font-size:13px;background:var(–white);border:1.5px solid var(–border);border-radius:4px;}
+</style>
+
+</head>
+<body>
+
+<div class="topbar">
+  <button class="btn-back" id="back-btn">← Retour</button>
+  <div class="topbar-title">📊 Suivi</div>
+  <span style="font-family:var(--fa);font-size:10px;color:var(--ink3);letter-spacing:.1em;">V6</span>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="dashboard">📊 Dashboard</button>
+  <button class="tab-btn" data-tab="journal">✏️ Journal</button>
+  <button class="tab-btn" data-tab="objectifs">🎯 Objectifs</button>
+</div>
+
+<!-- DASHBOARD -->
+
+<div class="tab-panel active" id="tab-dashboard">
+  <div id="streak-wrap"></div>
+  <div class="stats-row" id="stats-row"></div>
+  <div class="section-label">30 derniers jours</div>
+  <div class="calendar-grid" id="cal-grid"></div>
+  <div class="cal-legend">
+    <div class="leg-item"><div class="leg-dot" style="background:var(--green)"></div>Sobre / Clean</div>
+    <div class="leg-item"><div class="leg-dot" style="background:rgba(26,102,64,.3)"></div>Léger</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--orange)"></div>Modéré</div>
+    <div class="leg-item"><div class="leg-dot" style="background:var(--red)"></div>Intensif</div>
+  </div>
+  <div class="chart-wrap">
+    <div class="chart-title">Consommations — 8 dernières semaines</div>
+    <div class="bar-chart" id="bar-chart"></div>
+  </div>
+  <div class="section-label">Tendance substances</div>
+  <div id="substance-trend"></div>
+</div>
+
+<!-- JOURNAL -->
+
+<div class="tab-panel" id="tab-journal">
+  <div class="log-form">
+    <div class="form-title">Ajouter une entrée</div>
+    <div class="form-row">
+      <div class="form-label">Date</div>
+      <input class="form-input" type="date" id="log-date"/>
+    </div>
+    <div class="form-row">
+      <div class="form-label">Substance(s)</div>
+      <input class="form-input" type="text" id="log-sub" placeholder="ex. Alcool, MDMA, Cannabis…" autocomplete="off"/>
+    </div>
+    <div class="form-row">
+      <div class="form-label">Intensité</div>
+      <div class="intensity-btns">
+        <button class="int-btn c0" data-int="0" onclick="selectInt(0)">🧘 Sobre</button>
+        <button class="int-btn c1" data-int="1" onclick="selectInt(1)">🟢 Léger</button>
+        <button class="int-btn c2" data-int="2" onclick="selectInt(2)">🟠 Modéré</button>
+        <button class="int-btn c3" data-int="3" onclick="selectInt(3)">🔴 Intensif</button>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">Note (optionnel)</div>
+      <input class="form-input" type="text" id="log-note" placeholder="Contexte, ressenti, déclencheur…" maxlength="200"/>
+    </div>
+    <button class="btn-log" onclick="addEntry()">+ Enregistrer</button>
+    <button class="btn-log-clean" onclick="addCleanDay()">✓ Journée sobre — enregistrer</button>
+  </div>
+
+  <div class="section-label">Historique récent</div>
+  <div id="log-list"></div>
+</div>
+
+<!-- OBJECTIFS -->
+
+<div class="tab-panel" id="tab-objectifs">
+  <div class="log-form">
+    <div class="form-title">Nouvel objectif</div>
+    <div class="form-row">
+      <div class="form-label">Objectif</div>
+      <select class="form-select" id="goal-type">
+        <option value="clean_streak">Jours consécutifs sobres</option>
+        <option value="reduce_sub">Réduire une substance</option>
+        <option value="max_per_week">Maximum de prises par semaine</option>
+        <option value="no_heavy">Aucune séance intensive</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">Cible</div>
+      <input class="form-input" type="number" id="goal-target" placeholder="ex. 7 (jours) ou 2 (prises/semaine)" min="1" max="365"/>
+    </div>
+    <div class="form-row" id="goal-sub-row">
+      <div class="form-label">Substance (si applicable)</div>
+      <input class="form-input" type="text" id="goal-sub" placeholder="ex. Alcool"/>
+    </div>
+    <button class="btn-log" onclick="addGoal()">+ Créer l'objectif</button>
+  </div>
+
+  <div class="section-label">Mes objectifs</div>
+  <div id="goals-list"></div>
+
+  <div class="section-label" style="margin-top:20px;">💡 Conseils de réduction</div>
+  <div id="reduction-tips"></div>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const userName = params.get('name') || '';
+const userRegion = params.get('region') || 'BE';
+document.getElementById('back-btn').onclick = () => {
+  location.href = `index.html${userName ? '?name='+encodeURIComponent(userName)+'&region='+userRegion : ''}`;
+};
+
+const SKEY = 'ctc_v6_suivi';
+function loadSuivi() { try { return JSON.parse(localStorage.getItem(SKEY)) || {entries:[], goals:[]}; } catch(e){ return {entries:[], goals:[]}; } }
+function saveSuivi(d) { try { localStorage.setItem(SKEY, JSON.stringify(d)); } catch(e){} }
+
+const INT_LABELS = ['Sobre','Léger','Modéré','Intensif'];
+const INT_CLASSES = ['clean','light','moderate','heavy'];
+const INT_COLORS = ['var(--green)','rgba(26,102,64,.4)','var(--orange)','var(--red)'];
+
+let selectedInt = -1;
+
+window.selectInt = (v) => {
+  selectedInt = v;
+  document.querySelectorAll('.int-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.int-btn[data-int="${v}"]`).classList.add('active');
+};
+
+// Set today's date
+document.getElementById('log-date').value = new Date().toISOString().split('T')[0];
+
+window.addEntry = () => {
+  const date = document.getElementById('log-date').value;
+  const sub = document.getElementById('log-sub').value.trim();
+  const note = document.getElementById('log-note').value.trim();
+  if (!date) return alert('Sélectionne une date.');
+  if (selectedInt === -1) return alert('Choisis une intensité.');
+  if (selectedInt > 0 && !sub) return alert('Indique la substance.');
+  const d = loadSuivi();
+  d.entries.unshift({ id: Date.now(), date, sub: selectedInt === 0 ? 'Sobre' : sub, intensity: selectedInt, note });
+  saveSuivi(d);
+  document.getElementById('log-sub').value = '';
+  document.getElementById('log-note').value = '';
+  selectedInt = -1;
+  document.querySelectorAll('.int-btn').forEach(b => b.classList.remove('active'));
+  renderAll();
+};
+
+window.addCleanDay = () => {
+  const date = document.getElementById('log-date').value;
+  if (!date) return alert('Sélectionne une date.');
+  const d = loadSuivi();
+  d.entries = d.entries.filter(e => e.date !== date);
+  d.entries.unshift({ id: Date.now(), date, sub: 'Sobre', intensity: 0, note: '' });
+  saveSuivi(d);
+  renderAll();
+};
+
+window.deleteEntry = (id) => {
+  if (!confirm('Supprimer cette entrée ?')) return;
+  const d = loadSuivi();
+  d.entries = d.entries.filter(e => e.id !== id);
+  saveSuivi(d);
+  renderAll();
+};
+
+function getDateStr(daysAgo) {
+  const d = new Date();
+  d.setDate(d.getDate() - daysAgo);
+  return d.toISOString().split('T')[0];
+}
+
+function getDayIntensity(entries, dateStr) {
+  const dayEntries = entries.filter(e => e.date === dateStr);
+  if (!dayEntries.length) return null;
+  return Math.max(...dayEntries.map(e => e.intensity));
+}
+
+// ── DASHBOARD ──
+function renderDashboard() {
+  const d = loadSuivi();
+  const entries = d.entries;
+
+  // Streak
+  let streak = 0;
+  let i = 0;
+  while (true) {
+    const ds = getDateStr(i);
+    const dayE = entries.filter(e => e.date === ds);
+    if (dayE.length === 0 && i === 0) break;
+    if (dayE.length === 0) break;
+    const maxInt = Math.max(...dayE.map(e => e.intensity));
+    if (maxInt === 0) { streak++; i++; }
+    else break;
+  }
+  const longestStreak = computeLongestStreak(entries);
+  const last30 = Array.from({length:30}, (_,k) => getDateStr(29-k));
+  const cleanDays = last30.filter(ds => {
+    const dayE = entries.filter(e => e.date === ds);
+    return dayE.length > 0 && Math.max(...dayE.map(e => e.intensity)) === 0;
+  }).length;
+  const loggedDays = last30.filter(ds => entries.some(e => e.date === ds)).length;
+
+  document.getElementById('streak-wrap').innerHTML = `
+    <div class="streak-banner">
+      <div class="streak-flame">${streak >= 7 ? '🔥' : streak >= 3 ? '✨' : '🌱'}</div>
+      <div class="streak-info">
+        <div class="streak-val">${streak}</div>
+        <div class="streak-lbl">Jour${streak>1?'s':''} sobre${streak>1?'s':''} consécutif${streak>1?'s':''}</div>
+        <div class="streak-sub">Record : ${longestStreak}j · ${cleanDays} jours sobres / 30 jours</div>
+      </div>
+    </div>`;
+
+  const heavyCount = entries.filter(e => new Date(e.date) >= new Date(getDateStr(29)) && e.intensity === 3).length;
+  const heavyClass = heavyCount === 0 ? 'good' : heavyCount <= 2 ? 'warn' : 'bad';
+  document.getElementById('stats-row').innerHTML = `
+    <div class="stat-card good"><div class="stat-val">${cleanDays}</div><div class="stat-lbl">Jours sobres</div></div>
+    <div class="stat-card"><div class="stat-val">${loggedDays}</div><div class="stat-lbl">Jours journalisés</div></div>
+    <div class="stat-card ${heavyClass}"><div class="stat-val">${heavyCount}</div><div class="stat-lbl">Séances intenses</div></div>`;
+
+  // Calendar
+  const days = ['L','M','M','J','V','S','D'];
+  let calHtml = days.map(d => `<div class="cal-day header">${d}</div>`).join('');
+  const today = new Date();
+  const firstDay = new Date(today);
+  firstDay.setDate(firstDay.getDate() - 29);
+  const startWeekday = (firstDay.getDay() + 6) % 7;
+  for (let k = 0; k < startWeekday; k++) calHtml += '<div></div>';
+  for (let k = 0; k < 30; k++) {
+    const ds = getDateStr(29 - k);
+    const dayDate = new Date(ds);
+    const dayNum = dayDate.getDate();
+    const isToday = ds === getDateStr(0);
+    const intensity = getDayIntensity(entries, ds);
+    const cls = intensity === null ? '' : INT_CLASSES[intensity];
+    calHtml += `<div class="cal-day ${cls}${isToday?' today':''}" title="${ds}">${dayNum}</div>`;
+  }
+  document.getElementById('cal-grid').innerHTML = calHtml;
+
+  // Bar chart — 8 weeks
+  const barHtml = Array.from({length:8}, (_,w) => {
+    const weekEntries = Array.from({length:7}, (_,d) => getDateStr(7*(7-w) + d))
+      .flatMap(ds => entries.filter(e => e.date === ds));
+    const total = weekEntries.filter(e => e.intensity > 0).length;
+    const maxH = 80;
+    const h = Math.min(maxH, total * 16);
+    const color = total === 0 ? 'var(--green)' : total <= 2 ? 'rgba(26,102,64,.5)' : total <= 5 ? 'var(--orange)' : 'var(--red)';
+    const weekLabel = `S${8-w}`;
+    return `<div class="bar-col">
+      <div class="bar-val" style="font-size:9px;color:var(--ink3);">${total||''}</div>
+      <div class="bar" style="height:${h}px;background:${color};width:100%;border-radius:3px 3px 0 0;"></div>
+      <div class="bar-lbl">${weekLabel}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('bar-chart').innerHTML = barHtml;
+
+  // Substance trend
+  const subCounts = {};
+  entries.filter(e => e.intensity > 0 && new Date(e.date) >= new Date(getDateStr(29)))
+    .forEach(e => { subCounts[e.sub] = (subCounts[e.sub]||0) + 1; });
+  const sorted = Object.entries(subCounts).sort((a,b) => b[1]-a[1]).slice(0,5);
+  if (!sorted.length) {
+    document.getElementById('substance-trend').innerHTML = '<div class="no-data">Aucune consommation enregistrée sur 30 jours.</div>';
+  } else {
+    const max = sorted[0][1];
+    document.getElementById('substance-trend').innerHTML = sorted.map(([sub, count]) => `
+      <div style="background:var(--white);border:1.5px solid var(--border);border-radius:4px;padding:12px;margin-bottom:6px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+          <span style="font-family:var(--fa);font-size:13px;font-weight:700;">${sub}</span>
+          <span style="font-family:var(--fa);font-size:12px;color:var(--ink3);">${count}×</span>
+        </div>
+        <div style="height:5px;background:var(--cream2);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${(count/max*100).toFixed(0)}%;background:var(--blue);border-radius:3px;"></div>
+        </div>
+      </div>`).join('');
+  }
+}
+
+function computeLongestStreak(entries) {
+  let max = 0, cur = 0;
+  for (let k = 0; k < 365; k++) {
+    const ds = getDateStr(k);
+    const dayE = entries.filter(e => e.date === ds);
+    if (dayE.length > 0 && Math.max(...dayE.map(e=>e.intensity)) === 0) {
+      cur++; max = Math.max(max, cur);
+    } else if (dayE.length > 0) { cur = 0; }
+  }
+  return max;
+}
+
+// ── JOURNAL ──
+function renderJournal() {
+  const d = loadSuivi();
+  const list = d.entries.slice(0, 40);
+  if (!list.length) {
+    document.getElementById('log-list').innerHTML = '<div class="no-data">Aucune entrée. Commence à journaliser aujourd\'hui.</div>';
+    return;
+  }
+  document.getElementById('log-list').innerHTML = list.map(e => `
+    <div class="log-entry">
+      <div class="log-dot ${INT_CLASSES[e.intensity]}"></div>
+      <div class="log-info">
+        <div class="log-sub">${e.date} · ${INT_LABELS[e.intensity]}</div>
+        <div class="log-name">${e.sub}</div>
+        ${e.note ? `<div class="log-note">${e.note}</div>` : ''}
+      </div>
+      <button class="btn-del" onclick="deleteEntry(${e.id})">✕</button>
+    </div>`).join('');
+}
+
+// ── OBJECTIFS ──
+const GOAL_TYPES = {
+  clean_streak: {label:'Jours sobres consécutifs', unit:'jours'},
+  reduce_sub: {label:'Réduire', unit:'prises/semaine max'},
+  max_per_week: {label:'Max prises/semaine', unit:'prises'},
+  no_heavy: {label:'Aucune séance intensive', unit:'semaines'}
+};
+
+window.addGoal = () => {
+  const type = document.getElementById('goal-type').value;
+  const target = parseInt(document.getElementById('goal-target').value);
+  const sub = document.getElementById('goal-sub').value.trim();
+  if (!target || target < 1) return alert('Indique une cible valide.');
+  const d = loadSuivi();
+  d.goals = d.goals || [];
+  d.goals.push({ id: Date.now(), type, target, sub, created: new Date().toISOString().split('T')[0] });
+  saveSuivi(d);
+  document.getElementById('goal-target').value = '';
+  document.getElementById('goal-sub').value = '';
+  renderGoals();
+};
+
+window.deleteGoal = (id) => {
+  const d = loadSuivi();
+  d.goals = (d.goals||[]).filter(g => g.id !== id);
+  saveSuivi(d);
+  renderGoals();
+};
+
+function computeGoalProgress(goal, entries) {
+  if (goal.type === 'clean_streak') {
+    let streak = 0;
+    for (let k = 0; k < 365; k++) {
+      const ds = getDateStr(k);
+      const dayE = entries.filter(e => e.date === ds);
+      if (dayE.length > 0 && Math.max(...dayE.map(e=>e.intensity)) === 0) streak++;
+      else if (dayE.length > 0) break;
+      else break;
+    }
+    return { current: streak, pct: Math.min(100, Math.round(streak/goal.target*100)) };
+  }
+  if (goal.type === 'no_heavy') {
+    let weeks = 0;
+    for (let w = 0; w < 52; w++) {
+      const weekEntries = Array.from({length:7}, (_,d) => getDateStr(w*7+d)).flatMap(ds => entries.filter(e => e.date === ds));
+      if (weekEntries.some(e => e.intensity === 3)) break;
+      if (weekEntries.length > 0) weeks++;
+    }
+    return { current: weeks, pct: Math.min(100, Math.round(weeks/goal.target*100)) };
+  }
+  if (goal.type === 'max_per_week' || goal.type === 'reduce_sub') {
+    const thisWeek = Array.from({length:7}, (_,d) => getDateStr(d))
+      .flatMap(ds => entries.filter(e => e.date === ds && e.intensity > 0));
+    const relevant = goal.sub ? thisWeek.filter(e => e.sub.toLowerCase().includes(goal.sub.toLowerCase())) : thisWeek;
+    const current = relevant.length;
+    const pct = Math.min(100, Math.round(Math.max(0, (goal.target - current)/goal.target*100)));
+    return { current, pct, inverted: true };
+  }
+  return { current: 0, pct: 0 };
+}
+
+function renderGoals() {
+  const d = loadSuivi();
+  const goals = d.goals || [];
+  if (!goals.length) {
+    document.getElementById('goals-list').innerHTML = '<div class="no-data">Aucun objectif. Crée-en un ci-dessus.</div>';
+  } else {
+    document.getElementById('goals-list').innerHTML = goals.map(g => {
+      const prog = computeGoalProgress(g, d.entries);
+      const gt = GOAL_TYPES[g.type];
+      const color = prog.pct >= 100 ? 'var(--green)' : prog.pct >= 50 ? 'var(--blue)' : 'var(--orange)';
+      const label = g.type === 'reduce_sub' ? `${gt.label} ${g.sub}` : gt.label;
+      return `<div class="goal-card">
+        <div class="goal-head">
+          <div class="goal-name">${label}</div>
+          <div class="goal-pct" style="color:${color}">${prog.pct}%</div>
+        </div>
+        <div class="goal-bar"><div class="goal-fill" style="width:${prog.pct}%;background:${color};"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">
+          <div class="goal-sub">Cible : ${g.target} ${gt.unit} · Actuel : ${prog.current}</div>
+          <button style="background:none;border:none;color:var(--ink3);font-size:13px;cursor:pointer;" onclick="deleteGoal(${g.id})">✕</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Reduction tips
+  const tips = [
+    {icon:'⏰', title:'Différer de 15 minutes', text:'Quand l\'envie survient, passe à autre chose 15 min. Le craving passe souvent sans action.'},
+    {icon:'📝', title:'Tenir ce journal', text:'Journaliser sa consommation réduit la fréquence de 18% en moyenne selon les études de self-monitoring.'},
+    {icon:'🔄', title:'Remplacer le rituel', text:'L\'heure habituelle de consommation déclenche la prise. Remplacer le rituel par une autre habitude casse la boucle.'},
+    {icon:'📞', title:'Avoir un contact de crise', text:'Identifier une personne à appeler avant de consommer. Le simple fait de verbaliser réduit souvent le passage à l\'acte.'},
+    {icon:'🧩', title:'Jouer au Tetris', text:'3 minutes de Tetris (module inclus) réduisent l\'intensité du craving de 24% (Oxford 2015).'},
+    {icon:'💊', title:'Espacement thérapeutique', text:'Pour MDMA : minimum 3 mois entre prises. Pour psychédéliques : 4–6 semaines. Le cerveau a besoin de ce temps pour récupérer.'},
+  ];
+  document.getElementById('reduction-tips').innerHTML = tips.map(t => `
+    <div style="background:var(--white);border:1.5px solid var(--border);border-radius:4px;padding:13px;margin-bottom:7px;display:flex;gap:12px;align-items:flex-start;">
+      <div style="font-size:24px;flex-shrink:0;">${t.icon}</div>
+      <div>
+        <div style="font-family:var(--fa);font-size:13px;font-weight:700;margin-bottom:3px;">${t.title}</div>
+        <div style="font-size:12px;color:var(--ink3);line-height:1.55;">${t.text}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── TABS ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    renderAll();
+  });
+});
+
+function renderAll() {
+  renderDashboard();
+  renderJournal();
+  renderGoals();
+}
+
+renderAll();
+</script>
+
+</body>
+</html>

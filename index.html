@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+<title>CRACK THE CODE · V6</title>
+<link rel="manifest" href="manifest.json"/>
+<meta name="theme-color" content="#0d0d0d"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="CTC V6"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d0d0d;--ink2:#2a2a2a;--ink3:#666;
+  --red:#d4001a;--blue:#0f2f7a;
+  --cream:#f7f5f0;--cream2:#ede9e0;
+  --white:#fff;--border:#e0dbd0;
+  --fa:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{background:var(--cream);color:var(--ink);font-family:var(--fb);max-width:430px;margin:0 auto;min-height:100vh;overflow-x:hidden;}
+.screen{display:none;flex-direction:column;}
+.screen.active{display:flex;}
+
+/* ── LOGIN ── */
+#screen-home{min-height:100vh;padding:56px 24px 40px;justify-content:space-between;}
+.hero-badge{font-family:var(–fa);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(–ink3);margin-bottom:40px;}
+.hero-title{font-family:var(–fa);font-weight:800;font-size:52px;line-height:.96;margin-bottom:16px;}
+.hero-title .red{color:var(–red);}
+.hero-subtitle{font-size:15px;color:var(–ink3);line-height:1.6;max-width:280px;margin-bottom:48px;}
+.name-block{margin-bottom:32px;}
+.name-label{font-family:var(–fa);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(–ink3);margin-bottom:10px;}
+.name-input{width:100%;padding:16px 18px;font-family:var(–fb);font-size:18px;background:var(–white);border:1.5px solid var(–border);border-radius:4px;color:var(–ink);outline:none;transition:border-color .2s;}
+.name-input:focus{border-color:var(–red);}
+.name-input::placeholder{color:#bbb;}
+.region-select{width:100%;padding:14px 18px;font-family:var(–fb);font-size:15px;background:var(–white);border:1.5px solid var(–border);border-radius:4px;color:var(–ink);outline:none;appearance:none;-webkit-appearance:none;background-image:url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘12’ height=‘7’%3E%3Cpath d=‘M1 1l5 5 5-5’ stroke=’%23999’ stroke-width=‘1.5’ fill=‘none’ stroke-linecap=‘round’/%3E%3C/svg%3E”);background-repeat:no-repeat;background-position:right 16px center;margin-top:10px;cursor:pointer;transition:border-color .2s;}
+.region-select:focus{border-color:var(–blue);}
+.btn-continue{width:100%;padding:20px;font-family:var(–fa);font-size:18px;font-weight:700;background:var(–ink);color:var(–white);border:none;border-radius:4px;cursor:pointer;transition:background .2s,transform .1s;display:flex;justify-content:space-between;align-items:center;opacity:.35;pointer-events:none;}
+.btn-continue.active{opacity:1;pointer-events:all;}
+.btn-continue:active{transform:scale(.98);}
+.btn-continue .arrow{font-size:22px;}
+.footer-line{margin-top:48px;padding-top:20px;border-top:1px solid var(–border);font-size:10px;color:var(–ink3);text-align:center;letter-spacing:.05em;}
+
+/* ── COCKPIT ── */
+#screen-modules{min-height:100vh;padding:40px 24px 60px;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.cockpit-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
+.modules-greeting{font-family:var(–fa);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(–ink3);margin-bottom:4px;}
+.modules-title{font-family:var(–fa);font-weight:800;font-size:32px;line-height:1;}
+.modules-title span{color:var(–red);}
+.btn-edit{background:none;border:1.5px solid var(–border);border-radius:4px;padding:7px 12px;font-family:var(–fa);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(–ink3);cursor:pointer;}
+.btn-edit:active{background:var(–cream2);}
+.modules-full{display:grid;grid-template-columns:1fr;gap:10px;margin-top:4px;}
+.mod-row{display:flex;align-items:center;gap:14px;background:var(–white);border:1.5px solid var(–border);border-radius:4px;padding:16px;text-decoration:none;color:var(–ink);transition:border-color .15s,transform .15s;}
+.mod-row:active{transform:scale(.99);border-color:var(–red);}
+.mod-row .mr-icon{font-size:30px;flex-shrink:0;}
+.mod-row .mr-text{flex:1;}
+.mod-row .mr-name{font-family:var(–fa);font-size:15px;font-weight:700;margin-bottom:2px;}
+.mod-row .mr-desc{font-size:12px;color:var(–ink3);line-height:1.4;}
+.mod-row .mr-arrow{color:var(–ink3);font-size:16px;}
+.note-rdr{margin-top:16px;padding:12px 14px;background:rgba(212,0,26,.05);border:1px solid rgba(212,0,26,.15);border-radius:4px;font-size:11px;color:var(–ink3);line-height:1.6;}
+.note-rdr strong{color:var(–red);}
+</style>
+
+</head>
+<body>
+
+<!-- LOGIN (first visit only) -->
+
+<div id="screen-home" class="screen">
+  <div>
+    <div class="hero-badge">CRACK THE CODE · V6</div>
+    <h1 class="hero-title">Ton<br><span class="red">cerveau</span><br>d'abord.</h1>
+    <p class="hero-subtitle">Neurosciences appliquées à la réduction des risques. Protocoles validés. Données locales.</p>
+    <div class="name-block">
+      <div class="name-label">Ton prénom</div>
+      <input class="name-input" type="text" id="nameInput" placeholder="Prénom..." autocomplete="off" maxlength="30"/>
+      <select class="region-select" id="regionSelect">
+        <option value="BE">🇧🇪 Belgique</option>
+        <option value="FR">🇫🇷 France</option>
+        <option value="CH">🇨🇭 Suisse</option>
+        <option value="CA">🇨🇦 Canada (QC)</option>
+        <option value="LU">🇱🇺 Luxembourg</option>
+      </select>
+    </div>
+  </div>
+  <div>
+    <button class="btn-continue" id="continueBtn" onclick="saveAndGo()">
+      <span>Commencer</span>
+      <span class="arrow">→</span>
+    </button>
+    <div class="footer-line">Information à but éducatif · Ne remplace pas un avis médical</div>
+  </div>
+</div>
+
+<!-- COCKPIT (retour depuis modules) -->
+
+<div id="screen-modules" class="screen">
+  <div class="cockpit-topbar">
+    <div>
+      <div class="modules-greeting">Cockpit</div>
+      <div class="modules-title">Bonjour,<br><span id="greetName">—</span>.</div>
+    </div>
+    <button class="btn-edit" onclick="editProfile()">✎ Modifier</button>
+  </div>
+
+  <div class="modules-full">
+    <a class="mod-row" href="tetris.html" id="link-tetris">
+      <div class="mr-icon">🧩</div>
+      <div class="mr-text">
+        <div class="mr-name">Tetris Anti-Craving</div>
+        <div class="mr-desc">Interférence visuospatiale · Oxford 2015</div>
+      </div>
+      <span class="mr-arrow">→</span>
+    </a>
+    <a class="mod-row" href="maze.html" id="link-maze">
+      <div class="mr-icon">🌀</div>
+      <div class="mr-text">
+        <div class="mr-name">Gyro Labyrinthe</div>
+        <div class="mr-desc">Gyroscope · 3 niveaux · Cervelet & Vestibulaire</div>
+      </div>
+      <span class="mr-arrow">→</span>
+    </a>
+    <a class="mod-row" href="psychochecker.html" id="link-psy">
+      <div class="mr-icon">🔬</div>
+      <div class="mr-text">
+        <div class="mr-name">PSYCHOchecker RDR</div>
+        <div class="mr-desc">172 substances · Interactions · Réduction des risques</div>
+      </div>
+      <span class="mr-arrow">→</span>
+    </a>
+    <a class="mod-row" href="fiches.html" id="link-fiches">
+      <div class="mr-icon">📋</div>
+      <div class="mr-text">
+        <div class="mr-name">Exercices & Protocoles</div>
+        <div class="mr-desc">20 exercices neuroscience · Questionnaires validés</div>
+      </div>
+      <span class="mr-arrow">→</span>
+    </a>
+    <a class="mod-row" href="rdr.html" id="link-rdr">
+      <div class="mr-icon">🛡</div>
+      <div class="mr-text">
+        <div class="mr-name">RDR & Addictologue IA</div>
+        <div class="mr-desc">Ressources · Urgences · Agent IA interactif</div>
+      </div>
+      <span class="mr-arrow">→</span>
+    </a>
+    <a class="mod-row" href="suivi.html" id="link-suivi">
+      <div class="mr-icon">📊</div>
+      <div class="mr-text">
+        <div class="mr-name">Journal de Suivi</div>
+        <div class="mr-desc">Consommation · Streak · Objectifs · Graphiques</div>
+      </div>
+      <span class="mr-arrow">→</span>
+    </a>
+    <a class="mod-row" href="profil.html" id="link-profil">
+      <div class="mr-icon">🧬</div>
+      <div class="mr-text">
+        <div class="mr-name">Profil Neurologique</div>
+        <div class="mr-desc">DAST-10 · AUDIT · Impulsivité · Radar neuro</div>
+      </div>
+      <span class="mr-arrow">→</span>
+    </a>
+  </div>
+
+  <div class="note-rdr">
+    <strong>⚠️ Information préventive</strong> — Ces outils s'adressent aux personnes qui consomment déjà. Ils ne remplacent pas un suivi médical. En cas d'urgence : <strong>112</strong> (BE/CH/LU) · <strong>15</strong> (FR) · <strong>911</strong> (CA)
+  </div>
+</div>
+
+<script>
+const KEY = "ctc_v6";
+const save = d => { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch(e){} };
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch(e){ return null; } };
+
+const nameInput = document.getElementById("nameInput");
+const continueBtn = document.getElementById("continueBtn");
+const regionSelect = document.getElementById("regionSelect");
+
+function updateLinks(name, region) {
+  const p = new URLSearchParams({ name, region });
+  const map = { tetris:'tetris', maze:'maze', psy:'psychochecker', fiches:'fiches', rdr:'rdr', suivi:'suivi', profil:'profil' };
+  Object.entries(map).forEach(([id, file]) => {
+    const el = document.getElementById("link-" + id);
+    if (el) el.href = `${file}.html?${p}`;
+  });
+  document.getElementById("greetName").textContent = name;
+}
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+
+// ── INIT: skip login if session exists ──
+const session = load();
+if (session?.user?.name) {
+  updateLinks(session.user.name, session.user.region || "BE");
+  document.getElementById("screen-modules").classList.add("active");
+} else {
+  document.getElementById("screen-home").classList.add("active");
+}
+
+nameInput.addEventListener("input", () => {
+  continueBtn.classList.toggle("active", nameInput.value.trim().length > 0);
+});
+nameInput.addEventListener("keydown", e => {
+  if (e.key === "Enter" && nameInput.value.trim()) saveAndGo();
+});
+
+function saveAndGo() {
+  const name = nameInput.value.trim();
+  if (!name) return;
+  const region = regionSelect.value;
+  save({ user: { name, region }, sessions: session?.sessions || [], score: session?.score || 0 });
+  updateLinks(name, region);
+  document.getElementById("screen-home").classList.remove("active");
+  document.getElementById("screen-modules").classList.add("active");
+}
+
+// ── "Modifier" button → reset to login ──
+function editProfile() {
+  const d = load();
+  if (d?.user?.name) nameInput.value = d.user.name;
+  if (d?.user?.region) regionSelect.value = d.user.region;
+  continueBtn.classList.add("active");
+  document.getElementById("screen-modules").classList.remove("active");
+  document.getElementById("screen-home").classList.add("active");
+}
+</script>
+
+</body>
+</html>
