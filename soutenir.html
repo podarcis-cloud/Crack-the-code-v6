@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+<title>CRACK THE CODE · Soutenir le projet</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d0d0d;--ink2:#2a2a2a;--ink3:#666;
+  --red:#d4001a;--blue:#0f2f7a;--green:#1a6640;--purple:#6a1060;--gold:#b07d00;
+  --cream:#f7f5f0;--cream2:#ede9e0;--white:#fff;--border:#e0dbd0;
+  --fa:'Syne',sans-serif;--fb:'DM Sans',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{background:var(--cream);color:var(--ink);font-family:var(--fb);max-width:430px;margin:0 auto;min-height:100vh;}
+
+.topbar{position:sticky;top:0;z-index:100;background:var(–white);border-bottom:1px solid var(–border);display:flex;align-items:center;justify-content:space-between;padding:14px 20px;}
+.btn-back{background:none;border:1.5px solid var(–border);border-radius:4px;padding:7px 13px;font-family:var(–fa);font-size:11px;color:var(–ink3);cursor:pointer;}
+.btn-back:active{background:var(–cream2);}
+
+.page{padding:24px 20px 80px;}
+
+/* HERO */
+.hero{text-align:center;padding:28px 0 24px;}
+.hero-badge{font-family:var(–fa);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(–ink3);margin-bottom:12px;}
+.hero-title{font-family:var(–fa);font-weight:800;font-size:36px;line-height:1;margin-bottom:12px;}
+.hero-title .gold{color:var(–gold);}
+.hero-sub{font-size:14px;color:var(–ink3);line-height:1.65;max-width:320px;margin:0 auto;}
+
+/* IMPACT STATS */
+.impact-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0;}
+.impact-card{background:var(–white);border:1.5px solid var(–border);border-radius:4px;padding:16px;text-align:center;}
+.impact-val{font-family:var(–fa);font-size:28px;font-weight:800;color:var(–blue);margin-bottom:4px;}
+.impact-lbl{font-size:10px;color:var(–ink3);line-height:1.4;letter-spacing:.04em;}
+
+/* WHAT IS */
+.section-label{font-family:var(–fa);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(–ink3);margin:20px 0 10px;}
+.feature-row{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(–cream2);}
+.feature-row:last-child{border-bottom:none;}
+.feature-icon{font-size:22px;flex-shrink:0;width:32px;text-align:center;}
+.feature-text .ft-name{font-family:var(–fa);font-size:13px;font-weight:700;margin-bottom:2px;}
+.feature-text .ft-desc{font-size:12px;color:var(–ink3);line-height:1.5;}
+
+/* MISSION */
+.mission-card{background:var(–white);border:1.5px solid var(–border);border-left:4px solid var(–blue);border-radius:4px;padding:16px;margin-bottom:12px;}
+.mission-title{font-family:var(–fa);font-size:13px;font-weight:700;color:var(–blue);margin-bottom:6px;}
+.mission-text{font-size:12px;color:var(–ink3);line-height:1.7;}
+
+/* ROADMAP */
+.roadmap-item{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+.road-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.road-dot.done{background:var(–green);}
+.road-dot.in-progress{background:var(–blue);}
+.road-dot.planned{background:var(–cream2);border:2px solid var(–border);}
+.road-text .road-name{font-family:var(–fa);font-size:13px;font-weight:700;margin-bottom:1px;}
+.road-text .road-sub{font-size:11px;color:var(–ink3);}
+.road-badge{font-size:9px;font-family:var(–fa);padding:2px 6px;border-radius:2px;margin-left:6px;vertical-align:middle;}
+.road-badge.done{background:rgba(26,102,64,.1);color:var(–green);}
+.road-badge.in-progress{background:rgba(15,47,122,.1);color:var(–blue);}
+.road-badge.planned{background:var(–cream2);color:var(–ink3);}
+
+/* DONATION */
+.donation-wrap{background:var(–white);border:1.5px solid var(–border);border-radius:4px;padding:20px;margin-bottom:12px;}
+.don-title{font-family:var(–fa);font-size:16px;font-weight:800;margin-bottom:6px;}
+.don-sub{font-size:13px;color:var(–ink3);line-height:1.6;margin-bottom:16px;}
+.amount-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;}
+.amount-btn{background:var(–cream);border:1.5px solid var(–border);border-radius:4px;padding:12px 8px;font-family:var(–fa);font-size:14px;font-weight:700;cursor:pointer;text-align:center;transition:all .15s;}
+.amount-btn:hover,.amount-btn.active{background:var(–ink);color:var(–white);border-color:var(–ink);}
+.amount-desc{font-size:9px;color:var(–ink3);margin-top:3px;font-weight:400;}
+.custom-amount{width:100%;padding:12px 14px;border:1.5px solid var(–border);border-radius:4px;font-family:var(–fb);font-size:15px;outline:none;margin-bottom:10px;text-align:center;}
+.custom-amount:focus{border-color:var(–gold);}
+.btn-donate{width:100%;padding:16px;font-family:var(–fa);font-size:15px;font-weight:700;background:var(–gold);color:var(–white);border:none;border-radius:4px;cursor:pointer;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-donate:active{opacity:.8;}
+.btn-donate .don-icon{font-size:20px;}
+
+/* ALTERNATIVES */
+.alt-card{background:var(–white);border:1.5px solid var(–border);border-radius:4px;padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none;color:var(–ink);transition:border-color .15s;}
+.alt-card:active{border-color:var(–blue);}
+.alt-icon{font-size:26px;flex-shrink:0;}
+.alt-info .alt-name{font-family:var(–fa);font-size:13px;font-weight:700;margin-bottom:2px;}
+.alt-info .alt-desc{font-size:11px;color:var(–ink3);}
+.alt-arrow{color:var(–ink3);margin-left:auto;}
+
+/* TEAM */
+.team-card{background:var(–white);border:1.5px solid var(–border);border-radius:4px;padding:16px;text-align:center;margin-bottom:12px;}
+.team-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(–blue),var(–purple));display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 10px;}
+.team-name{font-family:var(–fa);font-size:15px;font-weight:800;margin-bottom:3px;}
+.team-role{font-size:12px;color:var(–ink3);line-height:1.5;}
+
+/* QUOTE */
+.quote-block{background:var(–white);border-left:4px solid var(–gold);border-radius:4px;padding:16px;margin:16px 0;font-size:14px;color:var(–ink2);line-height:1.7;font-style:italic;}
+.quote-author{font-family:var(–fa);font-size:11px;color:var(–ink3);margin-top:8px;font-style:normal;letter-spacing:.06em;}
+
+/* THANK YOU */
+.thank-you{text-align:center;padding:24px;background:var(–white);border:1.5px solid var(–border);border-radius:4px;display:none;}
+.thank-you .ty-icon{font-size:52px;margin-bottom:12px;}
+.thank-you .ty-title{font-family:var(–fa);font-size:22px;font-weight:800;margin-bottom:8px;}
+.thank-you .ty-sub{font-size:13px;color:var(–ink3);line-height:1.6;}
+</style>
+
+</head>
+<body>
+
+<div class="topbar">
+  <button class="btn-back" id="back-btn">← Retour</button>
+  <span style="font-family:var(--fa);font-size:12px;font-weight:700;">Soutenir le projet</span>
+  <span style="font-family:var(--fa);font-size:9px;color:var(--ink3);">V6</span>
+</div>
+
+<div class="page">
+
+  <!-- HERO -->
+
+  <div class="hero">
+    <div class="hero-badge">CRACK THE CODE · V6</div>
+    <h1 class="hero-title">Ton cerveau<br>mérite <span class="gold">mieux.</span></h1>
+    <p class="hero-sub">Un outil gratuit, sans pub, sans données vendues — construit uniquement pour aider les gens à prendre soin d'eux-mêmes.</p>
+  </div>
+
+  <!-- IMPACT -->
+
+  <div class="impact-grid">
+    <div class="impact-card"><div class="impact-val">172</div><div class="impact-lbl">substances documentées</div></div>
+    <div class="impact-card"><div class="impact-val">20</div><div class="impact-lbl">exercices neuroscience</div></div>
+    <div class="impact-card"><div class="impact-val">6</div><div class="impact-lbl">évaluations validées</div></div>
+    <div class="impact-card"><div class="impact-val">100%</div><div class="impact-lbl">gratuit & sans pub</div></div>
+  </div>
+
+  <!-- MISSION -->
+
+  <div class="section-label">Notre mission</div>
+  <div class="mission-card">
+    <div class="mission-title">Réduction des risques par la science</div>
+    <div class="mission-text">Crack the Code ne juge pas. Il informe, protège et accompagne. Chaque outil est basé sur des protocoles scientifiques validés — neurosciences, TCC, entretien motivationnel — et rendu accessible à tous, gratuitement.</div>
+  </div>
+  <div class="mission-card" style="border-left-color:var(--purple);">
+    <div class="mission-title" style="color:var(--purple);">Pourquoi ça coûte rien à l'utilisateur</div>
+    <div class="mission-text">Pas de publicité. Pas de revente de données. Pas de freemium. Le projet est financé uniquement par des dons volontaires et du temps bénévole. Chaque euro va directement au développement et à l'hébergement.</div>
+  </div>
+
+  <!-- QUOTE -->
+
+  <div class="quote-block">
+    "L'information sur la réduction des risques n'a pas à être enfouie dans des PDFs illisibles. Elle doit être belle, accessible, et dans la poche de chacun."
+    <div class="quote-author">— L'équipe Crack the Code</div>
+  </div>
+
+  <!-- ROADMAP -->
+
+  <div class="section-label">Roadmap du projet</div>
+  <div style="background:var(--white);border:1.5px solid var(--border);border-radius:4px;padding:16px;margin-bottom:14px;">
+    <div class="roadmap-item">
+      <div class="road-dot done"></div>
+      <div class="road-text"><div class="road-name">PSYCHOchecker 172 substances <span class="road-badge done">✓ Livré</span></div><div class="road-sub">Base de données substances + interactions</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="road-dot done"></div>
+      <div class="road-text"><div class="road-name">Tetris Anti-Craving <span class="road-badge done">✓ Livré</span></div><div class="road-sub">Protocole Oxford 2015 — interférence visuospatiale</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="road-dot done"></div>
+      <div class="road-text"><div class="road-name">Agent IA Addictologue Dr. Alex <span class="road-badge done">✓ Livré</span></div><div class="road-sub">Addictologue · Psychologue · Assistant social</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="road-dot done"></div>
+      <div class="road-text"><div class="road-name">Profil neurologique + Journal <span class="road-badge done">✓ Livré</span></div><div class="road-sub">DAST-10, AUDIT, impulsivité, radar neuro, suivi consommation</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="road-dot in-progress"></div>
+      <div class="road-text"><div class="road-name">App mobile native <span class="road-badge in-progress">En cours</span></div><div class="road-sub">iOS + Android — notifications craving, mode offline total</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="road-dot planned"></div>
+      <div class="road-text"><div class="road-name">Connexion services de santé <span class="road-badge planned">Planifié</span></div><div class="road-sub">Prise de RDV directe avec addictologues partenaires</div></div>
+    </div>
+    <div class="roadmap-item">
+      <div class="road-dot planned"></div>
+      <div class="road-text"><div class="road-name">Mode anonyme communautaire <span class="road-badge planned">Planifié</span></div><div class="road-sub">Partage anonyme d'expériences, forum modéré</div></div>
+    </div>
+    <div class="roadmap-item" style="margin-bottom:0;">
+      <div class="road-dot planned"></div>
+      <div class="road-text"><div class="road-name">Traductions EN · NL · DE <span class="road-badge planned">Planifié</span></div><div class="road-sub">Anglais, néerlandais, allemand</div></div>
+    </div>
+  </div>
+
+  <!-- MODULES -->
+
+  <div class="section-label">Ce que contient V6</div>
+  <div style="background:var(--white);border:1.5px solid var(--border);border-radius:4px;padding:14px;margin-bottom:14px;">
+    <div class="feature-row"><div class="feature-icon">🧩</div><div class="feature-text"><div class="ft-name">Tetris Anti-Craving</div><div class="ft-desc">Protocole Oxford 2015 — 3 min réduisent le craving de 24%</div></div></div>
+    <div class="feature-row"><div class="feature-icon">🌀</div><div class="feature-text"><div class="ft-name">Gyro Labyrinthe</div><div class="ft-desc">3 niveaux gyroscope — activation cervelet et pariétal</div></div></div>
+    <div class="feature-row"><div class="feature-icon">🔬</div><div class="feature-text"><div class="ft-name">PSYCHOchecker RDR</div><div class="ft-desc">172 substances, 150+ interactions documentées</div></div></div>
+    <div class="feature-row"><div class="feature-icon">📋</div><div class="feature-text"><div class="ft-name">Exercices Neuroscience</div><div class="ft-desc">20 protocoles validés — craving, plasticité, quotidien</div></div></div>
+    <div class="feature-row"><div class="feature-icon">🛡</div><div class="feature-text"><div class="ft-name">RDR + Dr. Alex IA</div><div class="ft-desc">Urgences, centres, annuaire, agent IA addictologue</div></div></div>
+    <div class="feature-row"><div class="feature-icon">📊</div><div class="feature-text"><div class="ft-name">Journal de Suivi</div><div class="ft-desc">Streak, graphiques, objectifs, calendrier 30j</div></div></div>
+    <div class="feature-row" style="border-bottom:none;"><div class="feature-icon">🧬</div><div class="feature-text"><div class="ft-name">Profil Neurologique</div><div class="ft-desc">6 évaluations validées, radar neuro, recommandations perso</div></div></div>
+  </div>
+
+  <!-- DONATION -->
+
+  <div class="section-label">Soutenir financièrement</div>
+  <div class="donation-wrap" id="donation-wrap">
+    <div class="don-title">💛 Un geste, un impact</div>
+    <div class="don-sub">100% des dons financent le développement, l'hébergement, et les coûts d'IA. Aucun frais de gestion. Aucune commission.</div>
+    <div class="amount-grid">
+      <button class="amount-btn" onclick="setAmount(5, this)">5€<div class="amount-desc">Un café</div></button>
+      <button class="amount-btn active" onclick="setAmount(15, this)">15€<div class="amount-desc">Un mois serveur</div></button>
+      <button class="amount-btn" onclick="setAmount(30, this)">30€<div class="amount-desc">Une semaine IA</div></button>
+      <button class="amount-btn" onclick="setAmount(50, this)">50€<div class="amount-desc">Nouveau module</div></button>
+      <button class="amount-btn" onclick="setAmount(100, this)">100€<div class="amount-desc">Développeur</div></button>
+      <button class="amount-btn" onclick="setAmount(null, this)">Autre<div class="amount-desc">Je choisis</div></button>
+    </div>
+    <input class="custom-amount" type="number" id="custom-amount" placeholder="Montant personnalisé (€)" min="1" style="display:none;"/>
+    <button class="btn-donate" id="donate-btn" onclick="donate()">
+      <span class="don-icon">💳</span>
+      <span id="donate-label">Soutenir · 15€</span>
+    </button>
+    <div style="font-size:10px;color:var(--ink3);text-align:center;margin-top:10px;">Paiement sécurisé via Stripe · Reçu fiscal disponible</div>
+  </div>
+
+  <div class="thank-you" id="thank-you">
+    <div class="ty-icon">🙏</div>
+    <div class="ty-title">Merci !</div>
+    <div class="ty-sub">Ton soutien permet à Crack the Code de continuer à exister et à s'améliorer. Tu fais partie de la solution.</div>
+  </div>
+
+  <!-- OTHER WAYS -->
+
+  <div class="section-label">Autres façons de soutenir</div>
+  <a class="alt-card" href="https://github.com/podarcis-cloud/Crack-the-code-v6" target="_blank">
+    <div class="alt-icon">⭐</div>
+    <div class="alt-info">
+      <div class="alt-name">Star sur GitHub</div>
+      <div class="alt-desc">Aide la visibilité du projet — gratuit et rapide</div>
+    </div>
+    <div class="alt-arrow">→</div>
+  </a>
+  <div class="alt-card" onclick="shareApp()">
+    <div class="alt-icon">📲</div>
+    <div class="alt-info">
+      <div class="alt-name">Partager l'application</div>
+      <div class="alt-desc">Envoie le lien à quelqu'un qui pourrait en avoir besoin</div>
+    </div>
+    <div class="alt-arrow">→</div>
+  </div>
+  <a class="alt-card" href="mailto:contact@crackthecode.app?subject=Retour%20CTC%20V6">
+    <div class="alt-icon">✉️</div>
+    <div class="alt-info">
+      <div class="alt-name">Donner ton avis</div>
+      <div class="alt-desc">Bugs, idées, témoignages — tout est précieux</div>
+    </div>
+    <div class="alt-arrow">→</div>
+  </a>
+  <a class="alt-card" href="https://github.com/podarcis-cloud/Crack-the-code-v6/issues" target="_blank">
+    <div class="alt-icon">🛠</div>
+    <div class="alt-info">
+      <div class="alt-name">Contribuer au code</div>
+      <div class="alt-desc">Pull requests bienvenues sur GitHub</div>
+    </div>
+    <div class="alt-arrow">→</div>
+  </a>
+
+  <!-- LEGAL -->
+
+  <div style="margin-top:28px;padding:14px;background:var(--white);border:1.5px solid var(--border);border-radius:4px;font-size:11px;color:var(--ink3);line-height:1.7;">
+    <strong style="font-family:var(--fa);">Transparence</strong><br>
+    Crack the Code V6 est un projet indépendant à but non lucratif. Les informations médicales sont fournies à titre éducatif et ne remplacent pas l'avis d'un professionnel de santé. Les dons sont traités via Stripe. Aucune donnée personnelle n'est transmise à des tiers.
+  </div>
+
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const userName = params.get('name') || '';
+const userAge = params.get('age') || '';
+const userRegion = params.get('region') || 'BE';
+document.getElementById('back-btn').onclick = () => {
+  location.href = `index.html${userName ? '?name='+encodeURIComponent(userName)+'&region='+userRegion+(userAge?'&age='+userAge:'') : ''}`;
+};
+
+let selectedAmount = 15;
+
+function setAmount(amount, btn) {
+  document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const customInput = document.getElementById('custom-amount');
+  if (amount === null) {
+    customInput.style.display = 'block';
+    customInput.focus();
+    selectedAmount = null;
+    document.getElementById('donate-label').textContent = 'Soutenir';
+  } else {
+    customInput.style.display = 'none';
+    selectedAmount = amount;
+    document.getElementById('donate-label').textContent = `Soutenir · ${amount}€`;
+  }
+}
+
+document.getElementById('custom-amount').addEventListener('input', e => {
+  const v = parseInt(e.target.value);
+  if (v > 0) {
+    selectedAmount = v;
+    document.getElementById('donate-label').textContent = `Soutenir · ${v}€`;
+  }
+});
+
+function donate() {
+  const amount = selectedAmount || parseInt(document.getElementById('custom-amount').value);
+  if (!amount || amount < 1) { alert('Indique un montant valide.'); return; }
+  // In production: redirect to Stripe Checkout
+  // window.location.href = `https://donate.stripe.com/yourlink?amount=${amount*100}`;
+  // For now: show thank you
+  document.getElementById('donation-wrap').style.display = 'none';
+  document.getElementById('thank-you').style.display = 'block';
+  document.getElementById('thank-you').scrollIntoView({ behavior: 'smooth' });
+  // Save to localStorage
+  try {
+    const d = JSON.parse(localStorage.getItem('ctc_v6')) || {};
+    d.supporter = true;
+    d.donationAmount = (d.donationAmount || 0) + amount;
+    localStorage.setItem('ctc_v6', JSON.stringify(d));
+  } catch(e) {}
+}
+
+function shareApp() {
+  const url = 'https://podarcis-cloud.github.io/Crack-the-code-v6/';
+  const text = '🧠 Crack the Code — neurosciences pour la réduction des risques. Gratuit, sans pub, basé sur la science.';
+  if (navigator.share) {
+    navigator.share({ title: 'Crack the Code V6', text, url }).catch(() => {});
+  } else {
+    navigator.clipboard?.writeText(url).then(() => alert('Lien copié !')).catch(() => prompt('Lien à partager :', url));
+  }
+}
+</script>
+
+</body>
+</html>

@@ -38,11 +38,11 @@ input,select,button{font-size:16px;}
 .input-label{font-family:var(–fa);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(–ink3);margin-bottom:6px;}
 .sub-input{width:100%;padding:12px 14px;border:1.5px solid var(–border);border-radius:4px;font-family:var(–fb);font-size:15px;background:var(–white);color:var(–ink);outline:none;transition:border-color .2s;}
 .sub-input:focus{border-color:var(–blue);}
-.suggestions{position:absolute;top:100%;left:0;right:0;background:var(–white);border:1.5px solid var(–border);border-radius:4px;max-height:200px;overflow-y:auto;z-index:200;display:none;box-shadow:0 4px 16px rgba(0,0,0,.08);}
-.suggestions div{padding:10px 14px;cursor:pointer;font-size:14px;border-bottom:1px solid var(–cream2);}
+.suggestions{position:absolute;top:calc(100% + 2px);left:0;right:0;background:#ffffff;border:2px solid var(–blue);border-radius:4px;max-height:220px;overflow-y:auto;z-index:9999;display:none;box-shadow:0 8px 24px rgba(0,0,0,.18);}
+.suggestions div{padding:10px 14px;cursor:pointer;font-size:14px;border-bottom:1px solid var(–cream2);background:#ffffff;color:var(–ink);}
 .suggestions div:last-child{border-bottom:none;}
-.suggestions div:hover{background:var(–cream);}
-.suggestions small{color:var(–ink3);font-size:12px;}
+.suggestions div:hover,.suggestions div:active{background:var(–cream2);}
+.suggestions small{color:var(–ink3);font-size:12px;display:block;}
 
 .btn-check{padding:14px 28px;font-family:var(–fa);font-size:14px;font-weight:700;background:var(–ink);color:var(–white);border:none;border-radius:4px;cursor:pointer;transition:background .2s;}
 .btn-check:hover{background:var(–ink2);}
@@ -441,24 +441,112 @@ const interactionsDB = [
   {a:"psilocybine",b:"lithium",msg:"💀 PSILOCYBINE + LITHIUM : convulsions documentées. Interaction grave."},
   {a:"diazépam",b:"alprazolam",msg:"🔴 DIAZÉPAM + ALPRAZOLAM : double benzodiazépine. Sédation excessive, dépression respiratoire."},
   {a:"o-dsmt",b:"alcool",msg:"💀 O-DSMT + ALCOOL : opioïde puissant + alcool. Dépression respiratoire mortelle."},
-  {a:"ibogaïne",b:"cocaïne",msg:"💀 IBOGAÏNE + COCAÏNE : arythmie ventriculaire documentée. Mort possible."}
+  {a:"ibogaïne",b:"cocaïne",msg:"💀 IBOGAÏNE + COCAÏNE : arythmie ventriculaire documentée. Mort possible."},
+  {a:"amphétamine",b:"cocaïne",msg:"🔴 AMPHÉTAMINE + COCAÏNE : double libérateur dopaminergique. Surcharge cardiovasculaire massive. Risque d'infarctus, AVC, arythmie fatale."},
+  {a:"amphétamine",b:"méthamphetamine",msg:"🔴 AMPHÉTAMINE + MÉTHAMPHETAMINE : neurotoxicité dopaminergique cumulée. Surcharge cardiaque sévère."},
+  {a:"amphétamine",b:"mdma",msg:"🔴 AMPHÉTAMINE + MDMA : neurotoxicité sérotoninergique et dopaminergique. Hyperthermie, arythmie."},
+  {a:"amphétamine",b:"ghb",msg:"🔴 AMPHÉTAMINE + GHB : le stimulant masque la sédation du GHB → surdosage GHB insidieux."},
+  {a:"amphétamine",b:"tramadol",msg:"💀 AMPHÉTAMINE + TRAMADOL : syndrome sérotoninergique. Convulsions, hyperthermie, décès possibles."},
+  {a:"amphétamine",b:"lsd",msg:"⚠️ AMPHÉTAMINE + LSD : tachycardie sévère, paranoïa, risque de bad trip intense."},
+  {a:"amphétamine",b:"kétamine",msg:"⚠️ AMPHÉTAMINE + KÉTAMINE : surcharge cardiaque, anxiété et paranoïa."},
+  {a:"cocaïne",b:"kétamine",msg:"🔴 COCAÏNE + KÉTAMINE : surcharge cardiovasculaire, tachycardie sévère, arythmie."},
+  {a:"cocaïne",b:"ghb",msg:"🔴 COCAÏNE + GHB : le stimulant masque la sédation du GHB → surdosage GHB."},
+  {a:"cocaïne",b:"héroïne",msg:"🔴 COCAÏNE + HÉROÏNE (SPEEDBALL) : stimulant + opioïde. Risque arrêt cardiaque à la descente cocaïne. Décès de nombreuses célébrités."},
+  {a:"cocaïne",b:"lsd",msg:"⚠️ COCAÏNE + LSD : anxiété et paranoïa cumulées. Mauvais trip quasi systématique."},
+  {a:"cocaïne",b:"tramadol",msg:"💀 COCAÏNE + TRAMADOL : syndrome sérotoninergique, convulsions, surcharge cardiovasculaire."},
+  {a:"cocaïne",b:"cannabis",msg:"⚠️ COCAÏNE + CANNABIS : le cannabis peut aggraver la tachycardie et l'anxiété liées à la cocaïne."},
+  {a:"cocaïne",b:"mdma",msg:"🔴 COCAÏNE + MDMA : hyperthermie, tachycardie, arythmie. Risque coronarien élevé."},
+  {a:"lsd",b:"psilocybine",msg:"⚠️ LSD + PSILOCYBINE : effets psychédéliques cumulés très intenses. Expérience imprévisible. Uniquement pour expérimentés."},
+  {a:"lsd",b:"mdma",msg:"⚠️ LSD + MDMA (CANDYFLIP) : intensité extrême, durée prolongée. Risque de bad trip. Jamais en première expérience."},
+  {a:"lsd",b:"cannabis",msg:"⚠️ LSD + CANNABIS : le cannabis peut transformer un trip gérable en bad trip intense. Éviter en phase de montée."},
+  {a:"lsd",b:"kétamine",msg:"⚠️ LSD + KÉTAMINE : dissociation + hallucinations. Expérience très intense, potentiellement terrifiante."},
+  {a:"lsd",b:"amphétamine",msg:"⚠️ LSD + AMPHÉTAMINE : tachycardie sévère, paranoïa et confusion."},
+  {a:"lsd",b:"cocaïne",msg:"⚠️ LSD + COCAÏNE : paranoïa et anxiété cumulées. Bad trip quasi systématique."},
+  {a:"lsd",b:"ghb",msg:"⚠️ LSD + GHB : le trip masque la somnolence du GHB → surdosage GHB insidieux."},
+  {a:"psilocybine",b:"mdma",msg:"⚠️ PSILOCYBINE + MDMA : intensité cumulée, risque hyperthermie. Sans expérience et soutien : éviter."},
+  {a:"psilocybine",b:"cannabis",msg:"⚠️ PSILOCYBINE + CANNABIS : le cannabis amplifie fortement le trip. Risque de bad trip."},
+  {a:"psilocybine",b:"kétamine",msg:"⚠️ PSILOCYBINE + KÉTAMINE : dissociation + psychédélique. Très intense, imprévisible."},
+  {a:"psilocybine",b:"cocaïne",msg:"⚠️ PSILOCYBINE + COCAÏNE : tachycardie sévère, paranoïa. Mauvais trip quasi systématique."},
+  {a:"mdma",b:"ghb",msg:"🔴 MDMA + GHB : l'euphorie MDMA masque la sédation GHB → surdosage GHB. Hyperthermie possible."},
+  {a:"mdma",b:"kétamine",msg:"⚠️ MDMA + KÉTAMINE : surcharge cardiaque, confusion mentale intense. Populaire mais risqué."},
+  {a:"mdma",b:"cannabis",msg:"⚠️ MDMA + CANNABIS : peut aggraver l'anxiété en descente. Risque de bad trip."},
+  {a:"mdma",b:"alcool",msg:"🔴 MDMA + ALCOOL : déshydratation aggravée. Alcool masque les signaux d'alerte. Hépatotoxicité."},
+  {a:"mdma",b:"pregabaline",msg:"⚠️ MDMA + PREGABALINE : sédation potentialisée en descente. Risque cardiovasculaire."},
+  {a:"mdma",b:"5-htp",msg:"💀 MDMA + 5-HTP (pendant la prise) : syndrome sérotoninergique. Le 5-HTP est à prendre J+3, jamais pendant."},
+  {a:"kétamine",b:"héroïne",msg:"🔴 KÉTAMINE + HÉROÏNE : double dépression respiratoire. Jamais sans surveillance médicale."},
+  {a:"kétamine",b:"morphine",msg:"🔴 KÉTAMINE + MORPHINE : double analgésie, dépression respiratoire. Uniquement usage médical encadré."},
+  {a:"kétamine",b:"ghb",msg:"💀 KÉTAMINE + GHB : double dépresseur SNC. Coma possible."},
+  {a:"kétamine",b:"diazépam",msg:"🔴 KÉTAMINE + DIAZÉPAM : dépression SNC cumulée. Apnée documentée."},
+  {a:"kétamine",b:"alprazolam",msg:"🔴 KÉTAMINE + ALPRAZOLAM : sédation excessive, risque apnée."},
+  {a:"cannabis",b:"ghb",msg:"⚠️ CANNABIS + GHB : le cannabis masque la somnolence du GHB. Risque de surdosage GHB."},
+  {a:"cannabis",b:"opioïde",msg:"⚠️ CANNABIS + OPIOÏDE : peut potentialiser la dépression respiratoire. Prudence."},
+  {a:"cannabis",b:"alcool",msg:"⚠️ CANNABIS + ALCOOL : whitey possible (nausées, vomissements, malaise). Alcool aggrave l'anxiété du THC."},
+  {a:"cannabis",b:"diazépam",msg:"⚠️ CANNABIS + DIAZÉPAM : sédation potentialisée. Peut aggraver dépression."},
+  {a:"ghb",b:"morphine",msg:"💀 GHB + MORPHINE : dépression respiratoire cumulée potentiellement fatale."},
+  {a:"ghb",b:"fentanyl",msg:"💀 GHB + FENTANYL : mort quasi certaine hors réanimation."},
+  {a:"ghb",b:"diazépam",msg:"💀 GHB + DIAZÉPAM : triple dépresseur. Coma, arrêt respiratoire."},
+  {a:"ghb",b:"alprazolam",msg:"💀 GHB + ALPRAZOLAM : coma, arrêt respiratoire."},
+  {a:"ghb",b:"cannabis",msg:"⚠️ GHB + CANNABIS : sédation potentialisée. Surdosage GHB risqué."},
+  {a:"héroïne",b:"diazépam",msg:"💀 HÉROÏNE + DIAZÉPAM : dépression respiratoire mortelle. Combinaison responsable de très nombreux décès."},
+  {a:"héroïne",b:"alprazolam",msg:"💀 HÉROÏNE + ALPRAZOLAM : dépression respiratoire mortelle."},
+  {a:"héroïne",b:"klonopin",msg:"💀 HÉROÏNE + CLONAZÉPAM : dépression respiratoire mortelle."},
+  {a:"morphine",b:"diazépam",msg:"💀 MORPHINE + DIAZÉPAM : potentialisation dépressive mortelle."},
+  {a:"fentanyl",b:"diazépam",msg:"💀 FENTANYL + DIAZÉPAM : mort quasi certaine."},
+  {a:"fentanyl",b:"ghb",msg:"💀 FENTANYL + GHB : mort quasi certaine."},
+  {a:"pregabaline",b:"alcool",msg:"🔴 PREGABALINE + ALCOOL : sédation potentialisée, risque respiratoire."},
+  {a:"pregabaline",b:"kétamine",msg:"🔴 PREGABALINE + KÉTAMINE : dépression SNC cumulée."},
+  {a:"gabapentine",b:"alcool",msg:"🔴 GABAPENTINE + ALCOOL : potentialisation sédative."},
+  {a:"méthamphetamine",b:"ghb",msg:"🔴 MÉTHAMPHETAMINE + GHB : stimulant masque sédation GHB → surdosage GHB insidieux."},
+  {a:"méthamphetamine",b:"lsd",msg:"⚠️ MÉTHAMPHETAMINE + LSD : stimulation + psychédélique. Paranoïa intense, risque psychose."},
+  {a:"kratom",b:"benzos",msg:"🔴 KRATOM + BENZOS : dépression SNC cumulée. Risque respiratoire."},
+  {a:"kratom",b:"ghb",msg:"🔴 KRATOM + GHB : opioïde partiel + GABA. Risque respiratoire."},
+  {a:"kratom",b:"alcool",msg:"🔴 KRATOM + ALCOOL : potentialisation opioïde. Dépression respiratoire."},
+  {a:"kratom",b:"diazépam",msg:"🔴 KRATOM + DIAZÉPAM : dépression SNC cumulée."},
+  {a:"phénibut",b:"héroïne",msg:"💀 PHÉNIBUT + HÉROÏNE : mort possible. Double dépression SNC."},
+  {a:"phénibut",b:"diazépam",msg:"💀 PHÉNIBUT + DIAZÉPAM : coma possible. Double agoniste GABA."},
+  {a:"phénibut",b:"alcool",msg:"🔴 PHÉNIBUT + ALCOOL : potentialisation GABAergique. Sédation excessive."},
+  {a:"zolpidem",b:"héroïne",msg:"💀 ZOLPIDEM + HÉROÏNE : dépression respiratoire mortelle."},
+  {a:"tianeptine",b:"diazépam",msg:"🔴 TIANEPTINE + DIAZÉPAM : dépression SNC cumulée."},
+  {a:"tianeptine",b:"alcool",msg:"🔴 TIANEPTINE + ALCOOL : potentialisation opioïde."},
+  {a:"dextrométhorphane",b:"mdma",msg:"💀 DXM + MDMA : syndrome sérotoninergique. Hyperthermie, convulsions, décès."},
+  {a:"dextrométhorphane",b:"alcool",msg:"🔴 DXM + ALCOOL : dépression SNC cumulée. Vomissements + perte de conscience."},
+  {a:"dextrométhorphane",b:"diazépam",msg:"⚠️ DXM + DIAZÉPAM : sédation excessive, confusion."},
+  {a:"2c-b",b:"mdma",msg:"⚠️ 2C-B + MDMA : intensité psychédélique et empathique cumulée. Hyperthermie possible."},
+  {a:"2c-b",b:"alcool",msg:"⚠️ 2C-B + ALCOOL : nausées fréquentes, risque de bad trip."},
+  {a:"mda",b:"mdma",msg:"🔴 MDA + MDMA : double libérateur sérotoninergique. Neurotoxicité cumulée. Hyperthermie."},
+  {a:"méphédrone",b:"cocaïne",msg:"🔴 MÉPHÉDRONE + COCAÏNE : surcharge dopaminergique et cardiovasculaire. Arythmie."},
+  {a:"méphédrone",b:"alcool",msg:"🔴 MÉPHÉDRONE + ALCOOL : hépatotoxicité cumulée. Cardiotoxicité."},
+  {a:"méphédrone",b:"mdma",msg:"⚠️ MÉPHÉDRONE + MDMA : double entactogène. Hyperthermie, tachycardie extrême."},
+  {a:"ayahuasca",b:"lithium",msg:"💀 AYAHUASCA + LITHIUM : convulsions documentées. Interaction mortelle."},
+  {a:"ibogaïne",b:"opioïde",msg:"💀 IBOGAÏNE + OPIOÏDE : arythmie potentiellement fatale. Utilisation strictement médicale."},
+  {a:"ibogaïne",b:"amphétamine",msg:"💀 IBOGAÏNE + AMPHÉTAMINE : arythmie documentée. Ne jamais associer."},
+  {a:"ibogaïne",b:"lsd",msg:"💀 IBOGAÏNE + LSD : arythmie et crise psychotique. Ne jamais associer."},
+  {a:"naloxone",b:"héroïne",msg:"✅ NALOXONE + HÉROÏNE (overdose) : la naloxone renverse l'overdose en 2–5 min. Durée 30–90 min : redoser si nécessaire. Peut déclencher sevrage brutal mais non mortel."}
 ];
 
 function getInteractions(subList) {
-  const resolved = subList.map(s => aliases.get(s.trim().toLowerCase())).filter(Boolean).map(s => s.toLowerCase());
+  // Normalize: use aliases map + fallback lowercase
+  const resolved = subList.map(s => {
+    const key = s.trim().toLowerCase();
+    return aliases.get(key) ? aliases.get(key).toLowerCase() : key;
+  }).filter(s => s.length > 0);
   if (resolved.length < 2) return [];
   const results = [];
   for (let i = 0; i < resolved.length; i++) {
     for (let j = i+1; j < resolved.length; j++) {
+      const a = resolved[i], b = resolved[j];
       const match = interactionsDB.find(d =>
-        (d.a === resolved[i] && d.b === resolved[j]) ||
-        (d.a === resolved[j] && d.b === resolved[i])
+        (d.a === a && d.b === b) || (d.a === b && d.b === a) ||
+        // Partial match: check if either term contains the other
+        (a.includes(d.a) && b.includes(d.b)) || (b.includes(d.a) && a.includes(d.b)) ||
+        (d.a.includes(a) && d.b.includes(b)) || (d.a.includes(b) && d.b.includes(a))
       );
-      const pairLabel = `${resolved[i]} + ${resolved[j]}`;
-      if (match) {
-        results.push({ pair: pairLabel, msg: match.msg, severity: match.msg.startsWith('💀') ? 'danger' : match.msg.startsWith('🔴') ? 'warn' : 'info' });
+      const pairLabel = `${a} + ${b}`;
+      if (match && match.msg) {
+        const sev = match.msg.startsWith('💀') ? 'danger' : match.msg.startsWith('🔴') ? 'warn' : match.msg.startsWith('✅') ? 'safe' : 'info';
+        results.push({ pair: pairLabel, msg: match.msg, severity: sev });
       } else {
-        results.push({ pair: pairLabel, msg: "❓ Aucune interaction spécifique documentée. Tout mélange comporte des risques imprévisibles. Par mesure de précaution, ne mélangez pas. Si vous le faites : doses minimales et jamais seul.", severity: 'safe' });
+        results.push({ pair: pairLabel, msg: "❓ Aucune interaction spécifique documentée dans notre base. Tout mélange comporte des risques imprévisibles. Par précaution : doses minimales, jamais seul(e), consulter un professionnel.", severity: 'safe' });
       }
     }
   }
@@ -541,7 +629,7 @@ function renderGrid(containerId, statsId, filterText, filterClass, isCanna) {
     )) return false;
     if (filterClass && !s.categories.some(c => c.includes(filterClass))) return false;
     return true;
-  });
+  }).sort((a, b) => a.nom.localeCompare(b.nom, 'fr', {sensitivity:'base'}));
   const container = document.getElementById(containerId);
   document.getElementById(statsId).textContent = `${list.length} substance(s)`;
   if (!list.length) { container.innerHTML = '<div class="no-results">Aucune substance trouvée.</div>'; return; }
